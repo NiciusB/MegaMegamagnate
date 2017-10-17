@@ -1,10 +1,9 @@
 // ==UserScript==
 // @name         Mega Megamagnate
 // @namespace    https://tampermonkey.net/
-// @version      0.2
+// @version      0.3
 // @description  Utils for Megamagnate
 // @author       NiciusB
-// @grant       none
 // @match        *://www.megamagnate.net/*
 // @require      https://code.jquery.com/jquery-latest.js
 // ==/UserScript==
