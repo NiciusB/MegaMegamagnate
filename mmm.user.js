@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name         Mega Megamagnate
 // @namespace    https://tampermonkey.net/
-// @version      0.1
-// @description  try to take over the world!
-// @author       You
+// @version      0.2
+// @description  Utils for Megamagnate
+// @author       NiciusB
+// @grant       none
 // @match        *://www.megamagnate.net/*
-// @match        *://megamagnate.net/*
 // @require      https://code.jquery.com/jquery-latest.js
 // ==/UserScript==
 
@@ -13,6 +13,19 @@
     'use strict';
     $(function() {
         switchLocation(window.location.pathname.split('/').splice(1));
+        formatNumber = function(numero) {
+            var num = new NumberFormat();
+            num.setInputDecimal('.');
+            num.setNumber(numero);
+            num.setPlaces('0', false);
+            num.setCurrencyValue('');
+            num.setCurrency(true);
+            num.setCurrencyPosition(num.RIGHT_OUTSIDE);
+            num.setNegativeFormat(num.LEFT_DASH);
+            num.setNegativeRed(true);
+            num.setSeparators(true, '.', '.');
+            return num.toFormatted();
+        };
     });
 
     function switchLocation(loc) {
