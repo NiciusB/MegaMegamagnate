@@ -1,43 +1,27 @@
 // ==UserScript==
 // @name         Mega Megamagnate
 // @namespace    https://tampermonkey.net/
-// @version      0.4.1
+// @version      0.5.0
 // @description  Utils for Megamagnate
 // @author       NiciusB
 // @match        *://www.megamagnate.net/*
+// @run-at document-end
 // @require      https://code.jquery.com/jquery-latest.js
 // ==/UserScript==
 
-(function() {
-    'use strict';
-    $(function() {
-        switchLocation(window.location.pathname.split('/').splice(1));
-        formatNumber = function(numero) {
-            var num = new NumberFormat();
-            num.setInputDecimal('.');
-            num.setNumber(numero);
-            num.setPlaces('0', false);
-            num.setCurrencyValue('');
-            num.setCurrency(true);
-            num.setCurrencyPosition(num.RIGHT_OUTSIDE);
-            num.setNegativeFormat(num.LEFT_DASH);
-            num.setNegativeRed(true);
-            num.setSeparators(true, '.', '.');
-            return num.toFormatted();
-        };
-    });
-
-    function switchLocation(loc) {
-        switch(loc[0]) {
-            case 'buildings':
-                buildings.init();
-                break;
-            case 'casino':
-                if(loc[1] === 'play') casinos.init();
-                else if(loc[1] === 'hilo') HiLo.init();
-                break;
+Function.prototype.clone = function() {
+    var that = this;
+    var temp = function temporary() { return that.apply(this, arguments); };
+    for(var key in this) {
+        if (this.hasOwnProperty(key)) {
+            temp[key] = this[key];
         }
     }
+    return temp;
+};
+
+(function() {
+    'use strict';
 
     var HiLo = {
         init() {
@@ -98,14 +82,60 @@
         }
     };
 
-    Function.prototype.clone = function() {
-        var that = this;
-        var temp = function temporary() { return that.apply(this, arguments); };
-        for(var key in this) {
-            if (this.hasOwnProperty(key)) {
-                temp[key] = this[key];
-            }
+    function switchLocation(loc) {
+        switch(loc[0]) {
+            case 'buildings':
+                buildings.init();
+                break;
+            case 'casino':
+                if(loc[1] === 'play') casinos.init();
+                else if(loc[1] === 'hilo') HiLo.init();
+                break;
         }
-        return temp;
-    };
+    }
+
+    function onLoadChanges() {
+        formatNumber = function(numero) {
+            var num = new NumberFormat();
+            num.setInputDecimal('.');
+            num.setNumber(numero);
+            num.setPlaces('0', false);
+            num.setCurrencyValue('');
+            num.setCurrency(true);
+            num.setCurrencyPosition(num.RIGHT_OUTSIDE);
+            num.setNegativeFormat(num.LEFT_DASH);
+            num.setNegativeRed(true);
+            num.setSeparators(true, '.', '.');
+            return num.toFormatted();
+        };
+        $('.footer').hide();
+        $('.trozoLogin div').first().hide();
+        $('.cajaDinero').hide().css('font-family', 'monospace').prepend('<span id="tiempoHastaLlenado" style="font-size: 0.25em;color:#aaa;"></span>');
+        setTimeout(()=> {
+            $('.cajaDinero').show();
+        }, 500);
+        setInterval(()=> {
+            if(!$('#cajetoDinero').attr('data')) return false; // sometimes it doesn't find it for some reason
+            var toHHMMSS = (secs) => {
+                var sec_num = parseInt(secs, 10);
+                var hours   = Math.floor(sec_num / 3600) % 24;
+                var minutes = Math.floor(sec_num / 60) % 60;
+                var seconds = sec_num % 60;
+                return [hours,minutes,seconds]
+                    .map(v => v < 10 ? "0" + v : v)
+                    .filter((v,i) => v !== "00" || i > 0)
+                    .join(":");
+            };
+            var limite_caja = parseInt($('#cajetoDinero').attr('data').split(':')[1].replace('.', ''));
+            var al_segundo = parseFloat($("#alsegundo").html());
+            var segundos_que_quedan = (limite_caja - dinero) / al_segundo;
+            if(segundos_que_quedan > 0) {
+                $('#tiempoHastaLlenado').html(toHHMMSS(segundos_que_quedan) + ' hasta llenado');
+            } else {
+                $('#tiempoHastaLlenado').html('Lleno');
+            }
+        }, 500);
+    }
+    onLoadChanges();
+    switchLocation(window.location.pathname.split('/').splice(1));
 })();
