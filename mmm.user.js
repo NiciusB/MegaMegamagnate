@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Megamagnate
 // @namespace    https://tampermonkey.net/
-// @version      0.3
+// @version      0.4
 // @description  Utils for Megamagnate
 // @author       NiciusB
 // @match        *://www.megamagnate.net/*
@@ -34,9 +34,17 @@
                 break;
             case 'casino':
                 if(loc[1] === 'play') casinos.init();
+                else if(loc[1] === 'hilo') HiLo.init();
                 break;
         }
     }
+
+    var HiLo = {
+        init() {
+            $('#jugadaspendientes').parents('.tablaContenido2').after('<div id="HiLoHelper"></div>');
+            $('#HiLoHelper').html('<a href="https://wizardofodds.com/games/blackjack/card-counting/high-low/" target="_blank"><img style="width:100%;" src="https://www.blackjack-trainer.net/wp-content/uploads/2015/02/card-counting.png"/></a>');
+        }
+    };
 
     var casinos = {
         init() {
