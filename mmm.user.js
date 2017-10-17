@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Megamagnate
 // @namespace    https://tampermonkey.net/
-// @version      0.5.1
+// @version      0.5.2
 // @description  Utils for Megamagnate
 // @author       NiciusB
 // @match        *://www.megamagnate.net/*
@@ -57,7 +57,7 @@ Function.prototype.clone = function() {
         slowMode: false,
         slowCounter: 0,
         interval() {
-            var bote = parseInt($('#mbote').html().replace('.', ''));
+            var bote = parseInt($('#mbote').html().split('.').join(''));
             if(casinos.slowMode && bote < 1e6 && casinos.slowCounter++<20) return;
             casinos.slowCounter = 0;
             apostar();
