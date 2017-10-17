@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Megamagnate
 // @namespace    https://tampermonkey.net/
-// @version      0.5.0
+// @version      0.5.1
 // @description  Utils for Megamagnate
 // @author       NiciusB
 // @match        *://www.megamagnate.net/*
@@ -40,15 +40,26 @@ Function.prototype.clone = function() {
                 } else {
                     $(this).text('Auto');
                     clearInterval(casinos.timerId);
+                    casinos.timerId = false;
                 }
             });
             $('<button>Max fichas</button>').appendTo(botones).click(function() {
                 var fichas = document.getElementById("fichas");
                 fichas.value = fichas.length*5;
             });
+            $('<button></button>').appendTo(botones).click(function() {
+                casinos.slowMode = !casinos.slowMode;
+                $(this).text(casinos.slowMode? 'Stop SlowMode' : 'Activar SlowMode');
+            }).click();
+            $('<div style="margin: 1em 0;color:#333;">SlowMode: Si el bote es menos de 1.000.000, solamente se apuesta cada 10 segundos</div>').appendTo(botones);
         },
         timerId: false,
+        slowMode: false,
+        slowCounter: 0,
         interval() {
+            var bote = parseInt($('#mbote').html().replace('.', ''));
+            if(casinos.slowMode && bote < 1e6 && casinos.slowCounter++<20) return;
+            casinos.slowCounter = 0;
             apostar();
         }
     };
