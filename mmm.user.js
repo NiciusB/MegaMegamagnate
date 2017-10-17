@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Megamagnate
 // @namespace    https://tampermonkey.net/
-// @version      0.5.2
+// @version      0.5.3
 // @description  Utils for Megamagnate
 // @author       NiciusB
 // @match        *://www.megamagnate.net/*
@@ -32,6 +32,9 @@ Function.prototype.clone = function() {
 
     var casinos = {
         init() {
+            var fichas = document.getElementById("fichas");
+            fichas.value = fichas.length*5;
+
             var botones = $('<div style="text-align:center;margin:1em;"></div>').insertBefore('#mensajescasino');
             $('<button>Auto</button>').appendTo(botones).attr('disabled', $('.tablaerror').length > 0).click(function() {
                 if ($(this).text() === 'Auto') {
@@ -42,10 +45,6 @@ Function.prototype.clone = function() {
                     clearInterval(casinos.timerId);
                     casinos.timerId = false;
                 }
-            });
-            $('<button>Max fichas</button>').appendTo(botones).click(function() {
-                var fichas = document.getElementById("fichas");
-                fichas.value = fichas.length*5;
             });
             $('<button></button>').appendTo(botones).click(function() {
                 casinos.slowMode = !casinos.slowMode;
