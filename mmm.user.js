@@ -1,27 +1,18 @@
 // ==UserScript==
 // @name         Mega Megamagnate
-// @namespace    https://tampermonkey.net/
-// @version      0.5.4
+// @namespace    https://github.com/NiciusB/MegaMegamagnate/
+// @version      0.6.1
 // @description  Utils for Megamagnate
 // @author       NiciusB
 // @match        *://www.megamagnate.net/*
 // @run-at document-end
 // @require      https://code.jquery.com/jquery-latest.js
+// @require      utils.js
 // ==/UserScript==
-
-Function.prototype.clone = function() {
-    var that = this;
-    var temp = function temporary() { return that.apply(this, arguments); };
-    for(var key in this) {
-        if (this.hasOwnProperty(key)) {
-            temp[key] = this[key];
-        }
-    }
-    return temp;
-};
 
 (function() {
     'use strict';
+    console.log('Mega Megamagnate loaded!');
 
     var HiLo = {
         init() {
@@ -64,7 +55,7 @@ Function.prototype.clone = function() {
     };
 
     var buildings = {
-        calc() {
+        calcEficiencia() {
             $('.tablaContenido2 tr td').each(function(elm) {
                 var content = $(this).text();
                 var precio = /- Precio: (.+)\n/gm.exec(content);
@@ -81,14 +72,42 @@ Function.prototype.clone = function() {
                 }
             });
         },
+        calcEficienciaOptimizar() {
+            var arrayEdificios = [];
+            for(var k=0; k < e_name.length; k++) {
+                arrayEdificios[k] = parseInt($('#ned' + (k + 1)).html());
+            }
+            $('#eficienciaOptimizarNegocio').html(rentabilidadOptimizarNegocio(arrayEdificios, $('#precioOptimizarNegocio').val()) + '%');
+        },
         init() {
             // verificarPrecio se llama después de comprar un edificio y parsear el ajax
             var old_verificarPrecio = verificarPrecio.clone();
             verificarPrecio = function(id) {
-                buildings.calc();
+                buildings.calcEficiencia();
+                buildings.calcEficienciaOptimizar();
                 old_verificarPrecio(id);
             };
-            buildings.calc();
+            buildings.calcEficiencia();
+            $('.tablaContenido2').after(`
+				<table  class="tablaContenido2" cellspacing="0" cellpadding="0" style="margin-top:15px">
+				<tr>
+					<td class="topTitulo2"> Eficiencia de Optimizar Negocio </td>
+				</tr>
+				<tr>
+					<td>
+						Precio de Optimizar Negocio: <input type="number" id="precioOptimizarNegocio" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p style="display:inline" title="Porcentaje del coste que se recupera al día">- Eficiencia: <span id="eficienciaOptimizarNegocio">0%</span></p>
+					</td>
+				</tr>
+				</table>
+			`);
+            $('#precioOptimizarNegocio').on('change, input', () => {
+                buildings.calcEficienciaOptimizar();
+            });
         }
     };
 
