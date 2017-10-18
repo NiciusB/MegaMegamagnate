@@ -21,7 +21,7 @@ var casinos = {
       $(this).text(casinos.salirEnBote ? 'Stop SalirEnBote' : 'Activar SalirEnBote');
     }).click();
     $('<div style="margin: 1em 0;color:#333;">SlowMode: Si el bote es menos de 800.000, solamente se apuesta cada 10 segundos</div>').appendTo(botones);
-    $('<div style="margin: 1em 0;color:#333;">SalirEnBote: Si el bote es 15.000, avisar y salir automáticamente</div>').appendTo(botones);
+    $('<div style="margin: 1em 0;color:#333;">SalirEnBote: Si el bote igual o menos de 100.000, avisar y salir automáticamente</div>').appendTo(botones);
     setInterval(casinos.interval, 100);
   },
   interval() {
@@ -30,7 +30,7 @@ var casinos = {
     if (!casinoCerrado && casinos.auto) {
       var bote = parseInt($('#mbote').html().split('.').join(''));
 
-      if (casinos.salirEnBote && bote === 15000) {
+      if (casinos.salirEnBote && bote <= 100000) {
         alert('Bote!!');
         document.location = '/casino/list';
         casinos.auto = false;

@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  console.log('Mega Megamagnate v1.0.7 loaded!');
+  console.log('Mega Megamagnate v1.0.8 loaded!');
 
   function switchLocation(loc) {
     switch (loc[0]) {
