@@ -26,7 +26,6 @@ var casinos = {
   },
   interval() {
     var casinoCerrado = $('.tablaerror').length > 0;
-    casinoCerrado = false;
     if (!casinoCerrado && casinos.auto) {
       var bote = parseInt($('#mbote').html().split('.').join(''));
 
