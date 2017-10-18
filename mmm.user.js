@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Megamagnate
 // @namespace    https://tampermonkey.net/
-// @version      0.5.3
+// @version      0.5.4
 // @description  Utils for Megamagnate
 // @author       NiciusB
 // @match        *://www.megamagnate.net/*
@@ -136,7 +136,7 @@ Function.prototype.clone = function() {
                     .filter((v,i) => v !== "00" || i > 0)
                     .join(":");
             };
-            var limite_caja = parseInt($('#cajetoDinero').attr('data').split(':')[1].replace('.', ''));
+            var limite_caja = parseInt($('#cajetoDinero').attr('data').split(':')[1].split('.').join(''));
             var al_segundo = parseFloat($("#alsegundo").html());
             var segundos_que_quedan = (limite_caja - dinero) / al_segundo;
             if(segundos_que_quedan > 0) {
