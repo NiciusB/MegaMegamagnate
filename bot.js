@@ -1,10 +1,10 @@
 (function () {
   'use strict';
-  console.log('Mega Megamagnate v1.0.5 loaded!');
+  console.log('Mega Megamagnate v1.0.6 loaded!');
 
   var HiLo = {
     init() {
-      $('#jugadaspendientes').parents('.tablaContenido2').after('<div id="HiLoHelper"></div>');
+      $('#jugadaspendientes').parents('.tablaContenido2').last().after('<div id="HiLoHelper"></div>');
       $('#HiLoHelper').html('<a href="https://wizardofodds.com/games/blackjack/card-counting/high-low/" target="_blank"><img style="width:100%;" src="https://i.imgur.com/4FCUpB1.png"/></a>');
     }
   };
@@ -76,7 +76,7 @@
         old_verificarPrecio(id);
       };
       buildings.calcEficiencia();
-      $('.tablaContenido2').after(`
+      $('.tablaContenido2').last().after(`
       <table  class="tablaContenido2" cellspacing="0" cellpadding="0" style="margin-top:15px">
       <tr>
         <td class="topTitulo2"> Eficiencia de Optimizar Negocio </td>
