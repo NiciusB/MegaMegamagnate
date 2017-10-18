@@ -153,6 +153,9 @@
       }
     }, 500);
   }
-  onLoadChanges();
-  switchLocation(window.location.pathname.split('/').splice(1));
+
+  if($('#cajetoDinero').length) {
+    onLoadChanges();
+    switchLocation(window.location.pathname.split('/').splice(1));
+  }
 })();
