@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mega Megamagnate
 // @namespace    https://github.com/NiciusB/MegaMegamagnate/
-// @version      1.0.1
+// @version      1.0.2
 // @description  Utils for Megamagnate
 // @author       NiciusB
 // @match        *://www.megamagnate.net/*
