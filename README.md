@@ -6,3 +6,10 @@ Utilidades para MM
 
 1. Añade la extensión de https://tampermonkey.net/ en tu navegador
 2. Abre mmm.user.js y clicka en "Raw" en los botones a la derecha de la página
+
+# Features
+
+- AutoClicker para Casinos
+- Mejora del header
+- Calculo de eficiencia para Edificos
+- Imagen de guia para HiLo
