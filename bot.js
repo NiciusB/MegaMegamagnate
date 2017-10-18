@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  console.log('Mega Megamagnate v1.0.4 loaded!');
+  console.log('Mega Megamagnate v1.0.5 loaded!');
 
   var HiLo = {
     init() {
