@@ -2,7 +2,8 @@
 // @name         Mega Megamagnate
 // @namespace    https://github.com/NiciusB/MegaMegamagnate/
 // @updateURL    https://github.com/NiciusB/MegaMegamagnate/raw/master/mmm.user.js
-// @version      1.0.3
+// @downloadURL    https://github.com/NiciusB/MegaMegamagnate/raw/master/mmm.user.js
+// @version      1.0.4
 // @description  Utils for Megamagnate
 // @author       NiciusB
 // @match        *://www.megamagnate.net/*
