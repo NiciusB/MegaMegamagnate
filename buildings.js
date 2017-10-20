@@ -5,8 +5,8 @@ var buildings = {
       var precio = /- Precio: (.+)\n/gm.exec(content);
       var beneficiosdia = /- Bºs al dia: (.+)\n/gm.exec(content);
       if (precio && beneficiosdia) {
-        precio = parseInt(precio[1].replace('.', ''));
-        beneficiosdia = parseInt(beneficiosdia[1].replace('.', ''));
+        precio = parseInt(precio[1].split('.').join(''));
+        beneficiosdia = parseInt(beneficiosdia[1].split('.').join(''));
         var eficiencia = beneficiosdia / precio;
         if (!$(this).find('.eficiencia').length) {
           $(this).find('.imageListadoDiv').css('margin-bottom', '1em');
