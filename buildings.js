@@ -39,7 +39,7 @@ var buildings = {
     </tr>
     <tr>
       <td>
-        Precio de Optimizar Negocio: <input type="number" id="precioOptimizarNegocio" />
+        Precio de Optimizar Negocio: <input type="text" id="precioOptimizarNegocio" />
       </td>
     </tr>
     <tr>
