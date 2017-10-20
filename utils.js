@@ -17,7 +17,7 @@ var rentabilidadOptimizarNegocio = function (arrayEdificios, precioOptimizar) {
     for (k = 0; k < e_name.length; k++) {
         suma += e_aumentoPorOptimizar[k] * arrayEdificios[k];
     }
-    return Math.floor(suma / precioOptimizar * 10000) / 100;
+    return Math.floor(suma / parseInt(precioOptimizar) * 10000) / 100;
 };
 
 var HiLo = {
