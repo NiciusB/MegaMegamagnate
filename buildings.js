@@ -21,7 +21,7 @@ var buildings = {
     for (var k = 0; k < e_name.length; k++) {
       arrayEdificios[k] = parseInt($('#ned' + (k + 1)).html());
     }
-    $('#eficienciaOptimizarNegocio').html(rentabilidadOptimizarNegocio(arrayEdificios, $('#precioOptimizarNegocio').val()) + '%');
+    $('#eficienciaOptimizarNegocio').html(rentabilidadOptimizarNegocio(arrayEdificios, $('#precioOptimizarNegocio').val().split('.').join('')) + '%');
   },
   init() {
     // verificarPrecio se llama después de comprar un edificio y parsear el ajax
