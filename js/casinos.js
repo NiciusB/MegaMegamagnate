@@ -1,4 +1,4 @@
-var casinos = {
+module.exports = {
   slowMode: false,
   salirEnBote: false,
   auto: true,

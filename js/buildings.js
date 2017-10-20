@@ -1,4 +1,4 @@
-var buildings = {
+module.exports = {
   calcEficiencia() {
     $('.tablaContenido2 tr td').each(function (elm) {
       var content = $(this).text();
@@ -25,13 +25,13 @@ var buildings = {
   },
   init() {
     // verificarPrecio se llama después de comprar un edificio y parsear el ajax
-    var old_verificarPrecio = verificarPrecio.clone();
-    verificarPrecio = function (id) {
-      buildings.calcEficiencia();
-      buildings.calcEficienciaOptimizar();
+    var old_verificarPrecio = window.verificarPrecio.clone();
+    window.verificarPrecio = id => {
+      this.calcEficiencia();
+      this.calcEficienciaOptimizar();
       old_verificarPrecio(id);
     };
-    buildings.calcEficiencia();
+    this.calcEficiencia();
     $('.tablaContenido2').last().after(`
     <table  class="tablaContenido2" cellspacing="0" cellpadding="0" style="margin-top:15px">
     <tr>
