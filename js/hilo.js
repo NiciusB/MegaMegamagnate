@@ -7,19 +7,23 @@ function setListeners() {
       let cardPos = parseInt(hilo.style.backgroundPosition.split("px")[0])
       let currentCard = Math.abs(Math.floor(cardPos / cardSize))
       currentCard > 12 ? currentCard = 0 : null
-      let chances = {hi: (12 - currentCard) / 12, lo: (currentCard) / 12}
-      let style = {hi: 'color: #222; font-weight: bold;', lo: 'color: #222; font-weight: bold;'}
+      let chances = { hi: (12 - currentCard) / 12, lo: (currentCard) / 12 }
+      let style = { hi: 'color: #222; font-weight: bold;', lo: 'color: #222; font-weight: bold;' }
       if (chances.hi > .5) {
-        style.hi = 'color: lightgreen; font-weight: bold;'
-        style.lo = 'color: red; font-weight: normal;'
+        style.hi = 'color: limegreen; font-weight: bold;'
+        style.lo = 'color: orangered; font-weight: normal;'
       } else if (chances.lo > .5) {
-        style.lo = 'color: lightgreen; font-weight: bold;'
-        style.hi = 'color: red; font-weight: normal;'
+        style.lo = 'color: limegreen; font-weight: bold;'
+        style.hi = 'color: orangered; font-weight: normal;'
       }
+      Object.keys(chances).map(function (key, index) {
+        chances[key] = Math.floor(chances[key] * 10000) / 100
+        chances[key] = chances[key] < 10 ? "0" + chances[key] : chances[key]
+      })
       let newDiv = `
         <div id="chances" style="margin:0 5px;flex: 1 1;">
-          <div>Hi chances: <span style="${style.hi}">${chances.hi}</span></div>
-          <div>Lo chances: <span style="${style.lo}">${chances.lo}</span></div>
+          <div>Hi chances: <span style="${style.hi}">${chances.hi}%</span></div>
+          <div>Lo chances: <span style="${style.lo}">${chances.lo}%</span></div>
         </div>
       `
       $("#chances").html(newDiv)
@@ -34,4 +38,4 @@ function init() {
   setListeners()
 }
 
-module.exports = {init, setListeners}
+module.exports = { init, setListeners }
