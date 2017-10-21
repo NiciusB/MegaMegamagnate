@@ -1,8 +1,9 @@
 import './utils.js'
 import buildings from './buildings.js'
 import casinos from './casinos.js'
+import * as HiLo from './hilo.js'
 
-console.log('Mega Megamagnate v2 loaded!!!!')
+console.log('Mega Megamagnate as loaded!')
 
 function switchLocation(loc) {
   switch (loc[0]) {
@@ -10,7 +11,7 @@ function switchLocation(loc) {
       buildings.init();
       break;
     case 'casino':
-      if (loc[1] === 'play') casinos.init();
+      if (loc[1] === 'play') casinos.init()
       else if (loc[1] === 'hilo') HiLo.init();
       break;
   }

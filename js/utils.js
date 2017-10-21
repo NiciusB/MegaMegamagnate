@@ -18,11 +18,4 @@ var rentabilidadOptimizarNegocio = function (arrayEdificios, precioOptimizar) {
         suma += e_aumentoPorOptimizar[k] * arrayEdificios[k];
     }
     return Math.floor(suma / parseInt(precioOptimizar) * 10000) / 100;
-};
-
-var HiLo = {
-    init() {
-        $('#jugadaspendientes').parents('.tablaContenido2').last().after('<div id="HiLoHelper"></div>');
-        $('#HiLoHelper').html('<a href="https://wizardofodds.com/games/blackjack/card-counting/high-low/" target="_blank"><img style="width:100%;" src="https://i.imgur.com/4FCUpB1.png"/></a>');
-    }
-};
+}
