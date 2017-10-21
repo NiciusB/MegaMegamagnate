@@ -22,10 +22,10 @@ var casinos = {
     }).click();
     $('<div style="margin: 1em 0;color:#333;">SlowMode: Si el bote es menos de 800.000, solamente se apuesta cada 10 segundos</div>').appendTo(botones);
     $('<div style="margin: 1em 0;color:#333;">SalirEnBote: Si el bote igual o menos de 100.000, avisar y salir automáticamente</div>').appendTo(botones);
-    this.interval(this)
+    this.interval()
   },
-  interval(self) {
-    setTimeout(self.interval, 500, self);
+  interval() {
+    setTimeout(casinos.interval, 500);
     var casinoCerrado = $('.tablaerror').length > 0;
     var delta = new Date() * 1 - casinos.lastTs;
     casinos.lastTs = new Date() * 1;
