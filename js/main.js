@@ -32,7 +32,7 @@ function onLoadChanges() {
     return num.toFormatted();
   };
   $('.footer').hide();
-  $('.trozoLogin div').first().hide();
+  $('.trozoLogin a[href="https://play.google.com/store/apps/details?id=net.megamagnate"]').hide();
   $('.cajaDinero').hide().css('font-family', 'monospace').prepend('<span id="tiempoHastaLlenado" style="font-size: 0.25em;color:#aaa;"></span>');
   setTimeout(() => {
     $('.cajaDinero').show();
@@ -60,7 +60,5 @@ function onLoadChanges() {
   }, 500);
 }
 
-if ($('#cajetoDinero').length) {
-  onLoadChanges();
-  switchLocation(window.location.pathname.split('/').splice(1));
-}
+onLoadChanges();
+switchLocation(window.location.pathname.split('/').splice(1));
