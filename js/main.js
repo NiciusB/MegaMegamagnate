@@ -3,7 +3,7 @@ import buildings from './buildings.js'
 import casinos from './casinos.js'
 import * as HiLo from './hilo.js'
 
-console.log('Mega Megamagnate as loaded!')
+console.log('Mega Megamagnate is loaded')
 
 function switchLocation(loc) {
   switch (loc[0]) {

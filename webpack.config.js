@@ -32,7 +32,9 @@ module.exports = {
             parallel: true
         })
     ],
+    // https://webpack.js.org/configuration/dev-server/
     devServer: {
+        https: true
     },
     stats: {
         colors: true
