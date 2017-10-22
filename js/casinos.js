@@ -43,10 +43,15 @@ var casinos = {
         return;
       }
 
+<<<<<<< HEAD
       if (casinos.slowMode && bote < parseInt(settings.casinos_slowAmount) || casinos.slowAmount) {
         var slowCounterMinValue = (parseInt(settings.casinos_slowTimer) * 1000 || casinos.slowTimer * 1000);
+=======
+      if (casinos.slowMode && bote < (parseInt(settings.casinos_slowAmount) || 800000)) {
+        var slowCounterMinValue = parseInt(settings.casinos_slowTimer) * 1000 || 10000
+>>>>>>> 3d370032d29e1839fae8caf56f7cad739cfd6f7c
       } else {
-        var slowCounterMinValue = 500;
+        var slowCounterMinValue = 500
       }
 
       casinos.slowCounter += delta;
