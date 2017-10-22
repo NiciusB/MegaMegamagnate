@@ -76,7 +76,7 @@ module.exports = {
         window.comienzaJuegoSinConfirmar()
       } else {
         var bote = parseInt($('#bote').html().split('.').join(''))
-        if (bote < 1000000) {
+        if (bote < 5000000) {
           apostarLaMejor()
         } else {
           window.playHilo(3) // Terminar juego
