@@ -33,8 +33,10 @@ formatNumber = function (numero) {
   num.setSeparators(true, '.', '.');
   return num.toFormatted();
 };
+
 $('.footer').hide();
-settings.general_playButton ? null : $('.trozoLogin a[href="https://play.google.com/store/apps/details?id=net.megamagnate"]').hide()
+
+if(!settings.general_playButton) $('.trozoLogin a[href="https://play.google.com/store/apps/details?id=net.megamagnate"]').hide()
 
 if (settings.general_moneyTimer) {
   $('.cajaDinero').css('font-family', 'monospace').prepend('<span id="tiempoHastaLlenado" style="font-size: 0.225em;color:#aaa;"></span>');

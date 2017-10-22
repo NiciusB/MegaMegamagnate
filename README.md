@@ -1,15 +1,17 @@
 # MegaMegamagnate
 
-Utilidades para MM
+Utilidades para MegaMagnate
+
+- Repositorio de la extensión: https://github.com/DamageESP/mm-extension
 
 # Instalación
 
 - Firefox pc o móvil: https://addons.mozilla.org/en-US/firefox/addon/mega-megamagnate/
-- Chrome: Aún pendiente
+- Chrome: https://chrome.google.com/webstore/detail/mega-megamagnate/epjmpbikfgkmahpkceafgednpmpgnjdf
 
 # Features
 
-- AutoClicker para Casinos
+- Mejoras para Casinos
 - Mejora del header
+- Mejoras para HiLo
 - Calculo de eficiencia para Edificos
-- Guía para HiLo
