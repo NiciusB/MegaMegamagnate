@@ -1,6 +1,8 @@
 let settings = JSON.parse(document.querySelector("#mm_settings").value)
 var casinos = {
   slowMode: false,
+  slowAmount: 800000,
+  slowTimer: 10,
   salirEnBote: false,
   auto: true,
   slowCounter: 0,
@@ -21,7 +23,8 @@ var casinos = {
       casinos.salirEnBote = !casinos.salirEnBote;
       $(this).text(casinos.salirEnBote ? 'Stop SalirEnBote' : 'Activar SalirEnBote');
     }).click();
-    $('<div style="margin: 1em 0;color:#333;">SlowMode: Si el bote es menos de 800.000, solamente se apuesta cada 10 segundos</div>').appendTo(botones);
+    settings.casinos_slowAmount ? settings.casinos_slowAmount = new Intl.NumberFormat('es-ES').format(settings.casinos_slowAmount) : null
+    $('<div style="margin: 1em 0;color:#333;">SlowMode: Si el bote es menor a ' + (settings.casinos_slowAmount || new Intl.NumberFormat('es-ES').format(casinos.slowAmount)) + ', solamente se apuesta cada ' + (settings.casinos_slowTimer || casinos.slowTimer) + ' segundos</div>').appendTo(botones);
     $('<div style="margin: 1em 0;color:#333;">SalirEnBote: Si el bote igual o menos de 100.000, avisar y salir automáticamente</div>').appendTo(botones);
     this.interval()
   },
@@ -40,8 +43,8 @@ var casinos = {
         return;
       }
 
-      if (casinos.slowMode && bote < parseInt(settings.casinos_slowAmount) || 800000) {
-        var slowCounterMinValue = parseInt(settings.casinos_slowTimer) * 1000 || 10000;
+      if (casinos.slowMode && bote < parseInt(settings.casinos_slowAmount) || casinos.slowAmount) {
+        var slowCounterMinValue = (parseInt(settings.casinos_slowTimer) * 1000 || casinos.slowTimer * 1000);
       } else {
         var slowCounterMinValue = 500;
       }
