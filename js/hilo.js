@@ -1,4 +1,5 @@
 var chances = { hi: 0, lo: 0 }
+let settings = JSON.parse(document.querySelector("#mm_settings").value)
 
 function setListeners() {
   let hilo = document.querySelector('.hilo')
@@ -53,6 +54,7 @@ module.exports = {
     $('<a class="boton" style="width: 100px">La más probable</a><br><br>').insertBefore('#endGame').click(apostarLaMejor)
     $('<a id="auto-boton" class="boton" style="width: 100px;"></a><br><br>').prependTo(".cajaHilo").click(changeHiLoAuto)
     $("<div id='chances'></div>").insertAfter(".cajaHilo")
+    $("<span style='margin: 1em 0;color:#333;'>Modo Auto: Seguirá apostando hasta que no llegue a la cantidad objetivo " + (new Intl.NumberFormat("es-ES").format(settings.hilo_exitOn) || new Intl.NumberFormat("es-ES").format(800000)) + "</span>").appendTo(".cajaHilo")
     $('a[onclick="comienzaJuego()"]').attr('onclick', 'comienzaJuegoSinConfirmar()')
     $('#endGame').attr('onclick', 'playHilo(3)')
     $('#jugadaspendientes').parents('.tablaContenido2').last().after('<div id="HiLoHelper"></div>')
@@ -76,7 +78,7 @@ module.exports = {
         window.comienzaJuegoSinConfirmar()
       } else {
         var bote = parseInt($('#bote').html().split('.').join(''))
-        if (bote < 5000000) {
+        if (bote < (settings.hilo_exitOn || 5000000)) {
           apostarLaMejor()
         } else {
           window.playHilo(3) // Terminar juego
