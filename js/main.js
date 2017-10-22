@@ -5,7 +5,8 @@ import buildings from './buildings.js'
 import casinos from './casinos.js'
 import * as HiLo from './hilo.js'
 
-console.log('Mega Megamagnate '+ settings.version +' is loaded')
+let mode = settings.advanced_devMode ? 'dev' : 'production'
+console.log('Mega Megamagnate '+ settings.version +' (' + mode + ' mode) is loaded')
 
 function switchLocation(loc) {
   switch (loc[0]) {
