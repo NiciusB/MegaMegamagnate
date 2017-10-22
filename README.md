@@ -2,8 +2,6 @@
 
 Utilidades para MegaMagnate
 
-- Repositorio de la extensión: https://github.com/DamageESP/mm-extension
-
 # Instalación
 ## Móvil
 
@@ -22,3 +20,12 @@ Utilidades para MegaMagnate
 - Mejora del header
 - Mejoras para HiLo
 - Calculo de eficiencia para Edificos
+
+# FAQ
+
+### Va en contra de las reglas usar MegaMM?
+Nosotros creemos que no, ya que solamente facilita cálculos y acciones que habría que hacer manualmente, pero tendrían el mismo resultado
+### No he conseguido instalarla, o no entiendo el funcionamiento de alguna funcionalidad
+Mándame un correo a nuno@balbona.me
+
+- Repositorio de la extensión: https://github.com/DamageESP/mm-extension
