@@ -1,3 +1,4 @@
+let settings = JSON.parse(document.querySelector("#mm_settings").value)
 var casinos = {
   slowMode: false,
   salirEnBote: false,
@@ -39,8 +40,8 @@ var casinos = {
         return;
       }
 
-      if (casinos.slowMode && bote < 800000) {
-        var slowCounterMinValue = 10000;
+      if (casinos.slowMode && bote < parseInt(settings.casinos_slowAmount) || 800000) {
+        var slowCounterMinValue = parseInt(settings.casinos_slowTimer) * 1000 || 10000;
       } else {
         var slowCounterMinValue = 500;
       }
