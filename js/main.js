@@ -3,7 +3,7 @@ let settings = JSON.parse(document.querySelector("#mm_settings").value)
 import './utils.js'
 import buildings from './buildings.js'
 import casinos from './casinos.js'
-import * as HiLo from './hilo.js'
+import HiLo from './hilo.js'
 
 let mode = settings.advanced_devMode ? 'dev' : 'production'
 console.log('Mega Megamagnate '+ settings.version +' (' + mode + ' mode) is loaded')
