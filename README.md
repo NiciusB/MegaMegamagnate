@@ -5,9 +5,16 @@ Utilidades para MegaMagnate
 - Repositorio de la extensión: https://github.com/DamageESP/mm-extension
 
 # Instalación
+## Móvil
 
-- Firefox pc o móvil: https://addons.mozilla.org/en-US/firefox/addon/mega-megamagnate/
+- Solamente disponible en firefox
+- Firefox: https://addons.mozilla.org/en-US/firefox/addon/mega-megamagnate/
+
+## Escritorio
+
+- Firefox: https://addons.mozilla.org/en-US/firefox/addon/mega-megamagnate/
 - Chrome: https://chrome.google.com/webstore/detail/mega-megamagnate/epjmpbikfgkmahpkceafgednpmpgnjdf
+- Opera: Instalar https://addons.opera.com/en/extensions/details/download-chrome-extension-9/ y después https://chrome.google.com/webstore/detail/mega-megamagnate/epjmpbikfgkmahpkceafgednpmpgnjdf
 
 # Features
 
