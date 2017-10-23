@@ -34,7 +34,7 @@ var casinos = {
     if (!casinoCerrado && casinos.auto) {
       var bote = parseInt($('#mbote').html().split('.').join(''));
 
-      if (bote < casinos.lastBote) {
+      if (casinos.salirEnBote && bote < casinos.lastBote) {
         alert('Bote!!');
         document.location = '/casino/list';
         casinos.auto = false;
