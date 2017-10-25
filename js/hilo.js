@@ -1,5 +1,18 @@
+// tan solo queda encontrar el momento de sacar la carta que ha salido de la pool:
+//  cardPool.splice(cardPool.indexOf(currentCard), 1)
+
 var chances = { hi: 0, lo: 0 }
 let settings = JSON.parse(document.querySelector("#mm_settings").value)
+let cardPool = []
+
+function initializePool() {
+  cardPool = []
+  for (let i = 0; i <= 12; i++) {
+    for(let j = 0; j <= 3; j++) {
+      cardPool.push(i)
+    }
+  }
+}
 
 function setListeners() {
   let hilo = document.querySelector('.hilo')
@@ -9,9 +22,9 @@ function setListeners() {
     firingEvts[i].addEventListener('DOMSubtreeModified', e => {
       let cardPos = parseInt(hilo.style.backgroundPosition.split("px")[0])
       let currentCard = Math.abs(Math.floor(cardPos / cardSize))
-      currentCard > 12 ? currentCard = 0 : null
-      chances.hi = (12 - currentCard) / 12
-      chances.lo = (currentCard) / 12
+      if (currentCard > 12) currentCard = 0
+      chances.hi = window.chances('hi', currentCard)
+      chances.lo = window.chances('lo', currentCard)
       let style = { hi: 'color: #222; font-weight: bold;', lo: 'color: #222; font-weight: bold;' }
       if (chances.hi > .5) {
         style.hi = 'color: limegreen; font-weight: bold;'
@@ -50,11 +63,25 @@ function changeHiLoAuto() {
 
 module.exports = {
   init() {
+    window.chances = (type, number) => {
+      let pool
+      if (type == 'hi') {
+        pool = cardPool.filter(card => {
+          return card > number
+        })
+      } else {
+        pool = cardPool.filter(card => {
+          return card < number
+        })
+      }
+      console.log(cardPool);
+      return pool.length / cardPool.length
+    }
     $(".cajaHilo").css("height", "auto").css("flex", "1 0").parent().css("display", "flex")
     $('<a class="boton" style="width: 100px">La más probable</a><br><br>').insertBefore('#endGame').click(apostarLaMejor)
     $('<a id="auto-boton" class="boton" style="width: 100px;"></a><br><br>').prependTo(".cajaHilo").click(changeHiLoAuto)
     $("<div id='chances'></div>").insertAfter(".cajaHilo")
-    $("<span style='margin: 1em 0;color:#333;'>Modo Auto: Seguirá apostando hasta que no llegue a la cantidad objetivo " + new Intl.NumberFormat("es-ES").format(settings.hilo_exitOn) + "</span>").appendTo(".cajaHilo")
+    $("<span style='margin: 1em 0;color:#333;'>Modo Auto: Seguirá apostando mientras tengas al menos un " + settings.hilo_leastChances + "% de posibilidades de ganar, y hasta que no llegues a la cantidad objetivo " + new Intl.NumberFormat("es-ES").format(settings.hilo_exitOn) + "</span>").appendTo(".cajaHilo")
     $('a[onclick="comienzaJuego()"]').attr('onclick', 'comienzaJuegoSinConfirmar()')
     $('#endGame').attr('onclick', 'playHilo(3)')
     $('#jugadaspendientes').parents('.tablaContenido2').last().after('<div id="HiLoHelper"></div>')
@@ -77,15 +104,19 @@ module.exports = {
       if (!isPlaying || hasLostOrSold) {
         window.comienzaJuegoSinConfirmar()
       } else {
-        var bote = parseInt($('#bote').html().split('.').join(''))
-        if (bote < parseInt(settings.hilo_exitOn)) {
-          apostarLaMejor()
-        } else {
-          window.playHilo(3) // Terminar juego
-        }
+        if (chances.lo >= (parseInt(settings.hilo_leastChances) * 0.01) || chances.hi >= (parseInt(settings.hilo_leastChances) * 0.01)) {
+          var bote = parseInt($('#bote').html().split('.').join(''))
+          if (bote < parseInt(settings.hilo_exitOn)) {
+            apostarLaMejor()
+          } else {
+            window.initializePool()
+            window.playHilo(3) // Terminar juego
+          }
+        } else changeHiLoAuto()
       }
     }, 200)
 
+    initializePool()
     setListeners()
   }
 }
