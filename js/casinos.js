@@ -1,4 +1,4 @@
-let settings = JSON.parse(document.querySelector("#mm_settings").value)
+let settings = JSON.parse($("#mm_settings").val())
 var casinos = {
   slowMode: false,
   salirEnBote: false,
