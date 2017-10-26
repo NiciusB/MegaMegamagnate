@@ -23,44 +23,45 @@ function getChances(type, currentNumber) {
 }
 
 function detectarCarta() {
-  let hilo = $('.hilo')
   let cardSize = [84, 124]
-  let cardPos = hilo.css('background-position').split("px").map(x => parseInt(x))
+  let cardPos = $('.hilo').css('background-position').split("px").map(x => parseInt(x))
   let currentNumber = Math.abs(Math.floor(cardPos[0] / cardSize[0]))
   if (currentNumber === 13) currentNumber = 0 // "A" realmente es la que menos vale, aunque su posicion en el spritesheet es la final
   let currentSuit = Math.abs(Math.floor(cardPos[1] / cardSize[1]))
   return [currentNumber, currentSuit]
 }
 
+function updateChancesHtml() {
+  let style = { hi: 'color: #222; font-weight: bold;', lo: 'color: #222; font-weight: bold;' }
+  if (chances.hi > 50) {
+    style.hi = 'color: limegreen; font-weight: bold;'
+    style.lo = 'color: orangered; font-weight: normal;'
+  } else if (chances.lo > 50) {
+    style.lo = 'color: limegreen; font-weight: bold;'
+    style.hi = 'color: orangered; font-weight: normal;'
+  }
+  var displayChances = {}
+  Object.keys(chances).map(function (key, index) {
+    displayChances[key] = Math.floor(chances[key] * 100) / 100
+  })
+  let newDiv = `
+      <div id="chances" style="margin:0 5px;flex: 1 1;">
+        <div>Hi chances: <span style="${style.hi}">${displayChances.hi}%</span></div>
+        <div>Lo chances: <span style="${style.lo}">${displayChances.lo}%</span></div>
+      </div>
+    `
+  $("#chances").html(newDiv)
+}
+
 function onJugada() {
   if ($("#bote").html() == '0') initializeCardPool()
-
   var currentCard = detectarCarta()
 
   if (cardPool[currentCard[0]][currentCard[1]]) { // The events fires double sometimes, because this is the only way we get it every time the state changes
     cardPool[currentCard[0]][currentCard[1]] = false
     chances.hi = getChances('hi', currentCard[0])
     chances.lo = getChances('lo', currentCard[0])
-
-    let style = { hi: 'color: #222; font-weight: bold;', lo: 'color: #222; font-weight: bold;' }
-    if (chances.hi > 50) {
-      style.hi = 'color: limegreen; font-weight: bold;'
-      style.lo = 'color: orangered; font-weight: normal;'
-    } else if (chances.lo > 50) {
-      style.lo = 'color: limegreen; font-weight: bold;'
-      style.hi = 'color: orangered; font-weight: normal;'
-    }
-    var displayChances = {}
-    Object.keys(chances).map(function (key, index) {
-      displayChances[key] = Math.floor(chances[key] * 100) / 100
-    })
-    let newDiv = `
-        <div id="chances" style="margin:0 5px;flex: 1 1;">
-          <div>Hi chances: <span style="${style.hi}">${displayChances.hi}%</span></div>
-          <div>Lo chances: <span style="${style.lo}">${displayChances.lo}%</span></div>
-        </div>
-      `
-    $("#chances").html(newDiv)
+    updateChancesHtml()
   }
 }
 
