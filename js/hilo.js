@@ -1,12 +1,8 @@
-// tan solo queda encontrar el momento de sacar la carta que ha salido de la pool:
-// cardPool.splice(cardPool.indexOf(currentCard), 1)
-
 let settings = JSON.parse($("#mm_settings").val())
 if (!settings.hilo_leastChances) settings.hilo_leastChances = 40
 
 var chances = { hi: 0, lo: 0 }
 var cardPool = []
-var lastCard = [0, 0]
 
 function initializeCardPool() {
   cardPool = []
@@ -23,7 +19,7 @@ function getChances(type, currentNumber) {
     totalCards += cardsLeft
     if (type === 'hi' ? (key > currentNumber) : (key < currentNumber)) cardsThatWork += cardsLeft
   })
-  return cardsThatWork / totalCards
+  return cardsThatWork / totalCards * 100
 }
 
 function detectarCarta() {
@@ -43,21 +39,20 @@ function onJugada() {
 
   if (cardPool[currentCard[0]][currentCard[1]]) { // The events fires double sometimes, because this is the only way we get it every time the state changes
     cardPool[currentCard[0]][currentCard[1]] = false
-    lastCard = currentCard
     chances.hi = getChances('hi', currentCard[0])
     chances.lo = getChances('lo', currentCard[0])
 
     let style = { hi: 'color: #222; font-weight: bold;', lo: 'color: #222; font-weight: bold;' }
-    if (chances.hi > .5) {
+    if (chances.hi > 50) {
       style.hi = 'color: limegreen; font-weight: bold;'
       style.lo = 'color: orangered; font-weight: normal;'
-    } else if (chances.lo > .5) {
+    } else if (chances.lo > 50) {
       style.lo = 'color: limegreen; font-weight: bold;'
       style.hi = 'color: orangered; font-weight: normal;'
     }
     var displayChances = {}
     Object.keys(chances).map(function (key, index) {
-      displayChances[key] = Math.floor(chances[key] * 10000) / 100
+      displayChances[key] = Math.floor(chances[key] * 100) / 100
     })
     let newDiv = `
         <div id="chances" style="margin:0 5px;flex: 1 1;">
@@ -111,7 +106,7 @@ module.exports = {
       if (!isPlaying || hasLostOrSold) {
         window.comienzaJuegoSinConfirmar()
       } else {
-        if (chances.lo >= (parseInt(settings.hilo_leastChances) * 0.01) || chances.hi >= (parseInt(settings.hilo_leastChances) * 0.01)) {
+        if (chances.lo >= parseInt(settings.hilo_leastChances) || chances.hi >= parseInt(settings.hilo_leastChances)) {
           var bote = parseInt($('#bote').html().split('.').join(''))
           if (bote < parseInt(settings.hilo_exitOn)) {
             apostarLaMejor()
