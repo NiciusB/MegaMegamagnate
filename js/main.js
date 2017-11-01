@@ -9,6 +9,14 @@ import espionajes from './espionajes.js'
 let mode = settings.advanced_devMode ? 'dev' : 'production'
 console.log('Mega Megamagnate '+ settings.version +' (' + mode + ' mode) is loaded')
 
+function checkMsgReady() {
+	if (document.querySelector('.jquery-modal')) {
+		espionajes.init()
+	} else {
+		setTimeout(checkMsgReady, 50)
+	}
+}
+
 function switchLocation(loc) {
 	switch (loc[0]) {
 	case 'buildings':
@@ -21,6 +29,15 @@ function switchLocation(loc) {
 	case 'messages':
 		if (loc[1] === 'inbox') espionajes.init()
 		break
+	case 'megacorp':
+		if(loc[1] === 'chat')  {
+			let sharedMsgs = document.querySelectorAll('.manual-ajax')
+			for (let i = 0; i < sharedMsgs.length; i++) {
+				sharedMsgs[i].addEventListener('click', () => {
+					checkMsgReady()
+				})
+			}
+		}
 	}
 }
 
