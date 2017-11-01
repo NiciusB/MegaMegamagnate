@@ -4,8 +4,26 @@ module.exports = {
 		for (let i = 0; i < espionajes.length; i++) {
 			let profitData = document.createElement('span')
 			let buildings = this.getBuildings(espionajes[i])
-			profitData.innerHTML = this.calcProfit(buildings)
+			profitData.innerHTML = `
+			<div>
+				<br>
+				<a class='showInsights' href='#${espionajes[i].parentNode.parentNode.parentNode.parentNode.id}'>+ Info</a>
+				<div class='insights' style='display:none;'>${this.calcProfit(buildings)}</div>
+			</div>
+			`
 			espionajes[i].parentNode.insertBefore(profitData, espionajes[i].parentNode.childNodes[2])
+		}
+		let insightButton = document.querySelectorAll('.showInsights')
+		for (let i = 0; i < insightButton.length; i++) {
+			insightButton[i].addEventListener('click', () => {
+				if (insightButton[i].parentNode.querySelector('.insights').style.display == 'none') {
+					insightButton[i].innerHTML = '- Info'
+					insightButton[i].parentNode.querySelector('.insights').style.display = 'block'
+				} else {
+					insightButton[i].innerHTML = '+ Info'
+					insightButton[i].parentNode.querySelector('.insights').style.display = 'none'
+				}
+			})
 		}
 		
 	},
