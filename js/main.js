@@ -20,6 +20,7 @@ function switchLocation(loc) {
 		break
 	case 'messages':
 		if (loc[1] === 'inbox') espionajes.init()
+		break
 	}
 }
 

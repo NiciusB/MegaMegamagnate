@@ -2,21 +2,20 @@ module.exports = {
 	init() {
 		let espionajes = document.querySelectorAll('.reporteMision')
 		for (let i = 0; i < espionajes.length; i++) {
-			this.getBuildings(espionajes[i], data => {
-				let profitData = document.createElement('span')
-				profitData.innerHTML = this.calcProfit(data)
-				espionajes[i].parentNode.insertBefore(profitData, espionajes[i].parentNode.childNodes[2])
-			})
+			let profitData = document.createElement('span')
+			let buildings = this.getBuildings(espionajes[i])
+			profitData.innerHTML = this.calcProfit(buildings)
+			espionajes[i].parentNode.insertBefore(profitData, espionajes[i].parentNode.childNodes[2])
 		}
 		
 	},
-	getBuildings(espionaje, callback) {
+	getBuildings(espionaje) {
 		let espionajeData = espionaje.querySelector('.boton').parentNode.innerHTML.split('</div>')[1].split('<br>')
 		espionajeData = espionajeData.map(value => {
 			let finalValue = value.split(' ')
 			return parseInt(finalValue[finalValue.length - 1])
 		})
-		callback(espionajeData)
+		return espionajeData
 	},
 	calcProfit(userData) {
 		let responseData = ''
