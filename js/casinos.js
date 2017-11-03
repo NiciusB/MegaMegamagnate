@@ -27,7 +27,7 @@ var casinos = {
 		this.interval()
 	},
 	interval() {
-		setTimeout(casinos.interval, 500)
+		setTimeout(casinos.interval, 100)
 		var casinoCerrado = $('.tablaerror').length > 0
 		var delta = new Date() * 1 - casinos.lastTs
 		casinos.lastTs = new Date() * 1
