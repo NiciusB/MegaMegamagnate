@@ -27,7 +27,7 @@ var casinos = {
 		this.interval()
 	},
 	interval() {
-		setTimeout(casinos.interval, 100)
+		setTimeout(casinos.interval, 50)
 		var casinoCerrado = $('.tablaerror').length > 0
 		var delta = new Date() * 1 - casinos.lastTs
 		casinos.lastTs = new Date() * 1
@@ -44,7 +44,7 @@ var casinos = {
 			if (casinos.slowMode && bote < parseInt(settings.casinos_slowAmount)) {
 				slowCounterMinValue = parseInt(settings.casinos_slowTimer) * 1000
 			} else {
-				slowCounterMinValue = 500
+				slowCounterMinValue = 50
 			}
 
 			casinos.slowCounter += delta
