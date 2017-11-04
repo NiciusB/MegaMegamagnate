@@ -33,7 +33,7 @@ module.exports = {
 
 		// Fill chat and set interval
 		this.fetchChat()
-		setInterval(() => this.fetchChat(), 5000)
+		setInterval(() => this.fetchChat(), 100)
 	},
 	fetchChat() {
 		$.ajax({
@@ -50,6 +50,7 @@ module.exports = {
 				this.chatNum = msg['chatNum']
 				this.time = msg['time']
 			}
+
 			// Init espionajes on msgs
 			let sharedMsgs = document.querySelectorAll('.manual-ajax')
 			for (let i = 0; i < sharedMsgs.length; i++) {
