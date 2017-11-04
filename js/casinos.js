@@ -35,7 +35,7 @@ var casinos = {
 		casinos.salirEnBote = true
 		window.jAlert = () => {}
 		setInterval(()=>{
-			if(document.getElementById('palanca').src === 'https://s3.eu-central-1.amazonaws.com/eu.megamagnate/casinos/MMM'+tipo_casino+'/palancaon.gif') flag = 0
+			if(document.getElementById('palanca').src === 'https://s3.eu-central-1.amazonaws.com/eu.megamagnate/casinos/MMM' + window.tipo_casino +'/palancaon.gif') window.flag = 0
 		}, 1)
 	},
 	interval() {

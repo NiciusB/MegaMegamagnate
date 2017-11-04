@@ -25,7 +25,6 @@ module.exports = {
 				}
 			})
 		}
-		
 	},
 	getBuildings(espionaje) {
 		let espionajeData = espionaje.querySelector('.boton').parentNode.innerHTML.split('</div>')[1].split('<br>')
