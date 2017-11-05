@@ -43,7 +43,7 @@ module.exports = {
 			data: { 'event': 'getChat', 'myChat': this.chatNum, 'myTime': this.time }
 		}).done(function (msg) {
 			if (msg['error'] == 'ok') {
-				if (msg['mensaje'] !== $('#meinChat .cajaChat').html()) {
+				if (msg['mensaje'].length != document.querySelector('#meinChat .cajaChat').innerHTML.length - 6) {
 					document.querySelector('#meinChat .cajaChat').innerHTML = msg['mensaje']
 					$('#meinChat .cajaChat').scrollTop($('#meinChat .cajaChat')[0].scrollHeight)
 				}

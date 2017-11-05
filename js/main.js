@@ -7,7 +7,7 @@ import HiLo from './hilo.js'
 import espionajes from './espionajes.js'
 import chat from './chat.js'
 
-chat.init()
+if (document.querySelector('.chatMC')) chat.init() // Solo si estas en una MC
 
 let mode = settings.advanced_devMode ? 'dev' : 'production'
 console.log('Mega Megamagnate '+ settings.version +' (' + mode + ' mode) is loaded')
