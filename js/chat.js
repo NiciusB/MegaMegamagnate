@@ -3,6 +3,7 @@ import espionajes from './espionajes.js'
 module.exports = {
 	chatNum: 0,
 	time: 0,
+	lastChat: '',
 	init() {
 		// Set up outer box
 		let chatBox = document.createElement('div')
@@ -14,6 +15,7 @@ module.exports = {
 			e.preventDefault()
 			if (chatBox.style.display == 'none') {
 				chatBox.style.display = ''
+				this.markAsRead()
 				$('#meinChat .cajaChat').scrollTop($('#meinChat .cajaChat')[0].scrollHeight)
 			} else {
 				chatBox.style.display = 'none'
@@ -41,10 +43,11 @@ module.exports = {
 			url: '/petition/megacorp',
 			dataType: 'json',
 			data: { 'event': 'getChat', 'myChat': this.chatNum, 'myTime': this.time }
-		}).done(function (msg) {
+		}).done((msg) => {
 			if (msg['error'] == 'ok') {
-				if (msg['mensaje'].length != document.querySelector('#meinChat .cajaChat').innerHTML.length - 6) {
-					document.querySelector('#meinChat .cajaChat').innerHTML = msg['mensaje']
+				if (msg['mensaje'] != this.lastChat) {
+					this.lastChat = msg['mensaje']
+					document.querySelector('#meinChat .cajaChat').innerHTML = this.lastChat
 					$('#meinChat .cajaChat').scrollTop($('#meinChat .cajaChat')[0].scrollHeight)
 				}
 				this.chatNum = msg['chatNum']
@@ -70,7 +73,7 @@ module.exports = {
 			url: '/petition/megacorp',
 			dataType: 'json',
 			data: { 'event': 'sendChat', 'txt': what }
-		}).done(function (msg) {
+		}).done((msg) => {
 			if (msg['error'] != 'ok') {
 				return false
 			} else {
@@ -81,5 +84,11 @@ module.exports = {
 				this.time = msg['time']
 			}
 		})
+	},
+	markAsRead() {
+		let xhr = new XMLHttpRequest()
+		xhr.open('GET', 'https://www.megamagnate.net/megacorp/chat')
+		xhr.send()
+		document.querySelector('.menuCabecera').innerHTML = 'Chat Alianza'
 	}
 }
