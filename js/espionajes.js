@@ -2,28 +2,28 @@ module.exports = {
 	init() {
 		let espionajes = document.querySelectorAll('.reporteMision')
 		for (let i = 0; i < espionajes.length; i++) {
-			let profitData = document.createElement('span')
+			let profitData = document.createElement('div')
 			let buildings = this.getBuildings(espionajes[i])
 			profitData.innerHTML = `
-			<div>
-				<br>
-				<a class='showInsights' href='#${espionajes[i].parentNode.parentNode.parentNode.parentNode.id}'>+ Info</a>
-				<div class='insights' style='display:none;'>${this.calcProfit(buildings)}</div>
-			</div>
+			<span style='cursor: pointer; color: blue; text-decoration: underline;' class='showInsights'>+ Info</span>
+			<div class='insights' style='display:none;'>${this.calcProfit(buildings)}</div>
 			`
 			espionajes[i].parentNode.insertBefore(profitData, espionajes[i].parentNode.childNodes[2])
-		}
-		let insightButton = document.querySelectorAll('.showInsights')
-		for (let i = 0; i < insightButton.length; i++) {
-			insightButton[i].addEventListener('click', () => {
-				if (insightButton[i].parentNode.querySelector('.insights').style.display == 'none') {
-					insightButton[i].innerHTML = '- Info'
-					insightButton[i].parentNode.querySelector('.insights').style.display = 'block'
-				} else {
-					insightButton[i].innerHTML = '+ Info'
-					insightButton[i].parentNode.querySelector('.insights').style.display = 'none'
+			espionajes[i].parentNode.removeChild(espionajes[i].parentNode.childNodes[3])
+			if (i == espionajes.length - 1) {
+				let insightButton = document.querySelectorAll('.showInsights')
+				for (let j = 0; j < insightButton.length; j++) {
+					insightButton[j].addEventListener('click', () => {
+						if (insightButton[j].parentNode.querySelector('.insights').style.display == 'none') {
+							insightButton[j].innerHTML = '- Info'
+							insightButton[j].parentNode.querySelector('.insights').style.display = 'block'
+						} else {
+							insightButton[j].innerHTML = '+ Info'
+							insightButton[j].parentNode.querySelector('.insights').style.display = 'none'
+						}
+					})
 				}
-			})
+			}
 		}
 	},
 	getBuildings(espionaje) {
@@ -126,7 +126,7 @@ module.exports = {
 
 
 		responseData += '<br /><br />El edificio más caro es: <u>'+edificios[zn]+'</u> con un precio de <u>'+puntua(scostes[zn])+'</u> &euro;.'
-		responseData += '<br /><b>El edificio más rentable de atacar es: <u>'+edificios[mn]+'</u> ganando <u>'+puntua(capturas[mn])+'</u> &euro;.'
+		responseData += '<br /><b>El edificio más rentable de atacar es: <u>'+edificios[mn]+'</u> ganando <u>'+puntua(capturas[mn])+'</u> &euro;.</b>'
 		return responseData
 	}
 }

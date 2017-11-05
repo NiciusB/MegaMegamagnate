@@ -16,6 +16,7 @@ module.exports = {
 			if (chatBox.style.display == 'none') {
 				chatBox.style.display = ''
 				this.markAsRead()
+				this.listenReports()
 				$('#meinChat .cajaChat').scrollTop($('#meinChat .cajaChat')[0].scrollHeight)
 			} else {
 				chatBox.style.display = 'none'
@@ -53,18 +54,6 @@ module.exports = {
 				this.chatNum = msg['chatNum']
 				this.time = msg['time']
 			}
-
-			// Init espionajes on msgs
-			let sharedMsgs = document.querySelectorAll('.manual-ajax')
-			for (let i = 0; i < sharedMsgs.length; i++) {
-				sharedMsgs[i].addEventListener('click', e => {
-					e.preventDefault()
-					$.get(e.target.href, html => {
-						$(html).appendTo('body').modal()
-						espionajes.init()
-					})
-				})
-			}
 		})
 	},
 	say(what) {
@@ -90,5 +79,19 @@ module.exports = {
 		xhr.open('GET', 'https://www.megamagnate.net/megacorp/chat')
 		xhr.send()
 		document.querySelector('.menuCabecera').innerHTML = 'Chat Alianza'
+	},
+	listenReports() {
+		// Init espionajes on msgs
+		let sharedMsgs = document.querySelector('#meinChat').querySelectorAll('.manual-ajax')
+		let listener = e => {
+			e.preventDefault()
+			$.get(e.target.href, html => {
+				$(html).appendTo('body').modal()
+				espionajes.init()
+			})
+		}
+		for (let i = 0; i < sharedMsgs.length; i++) {
+			sharedMsgs[i].addEventListener('click', listener)
+		}
 	}
 }
