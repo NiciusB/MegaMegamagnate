@@ -1,4 +1,4 @@
-import Cookies from './js.cookie.min.js'
+import Cookies from './lib/js.cookie.min.js'
 
 let settings = JSON.parse($('#mm_settings').val())
 var casinos = {
