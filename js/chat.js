@@ -36,7 +36,7 @@ module.exports = {
 
 		// Fill chat and set interval
 		this.fetchChat()
-		setInterval(() => this.fetchChat(), 1000)
+		setInterval(() => this.fetchChat(), 10000)
 	},
 	fetchChat() {
 		$.ajax({
