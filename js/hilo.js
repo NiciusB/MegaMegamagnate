@@ -1,4 +1,4 @@
-let settings = JSON.parse($('#mm_settings').val())
+let settings = window.mmm_settings
 if (!settings.hilo_leastChances) settings.hilo_leastChances = 40
 
 var chances = { hi: 0, lo: 0 }

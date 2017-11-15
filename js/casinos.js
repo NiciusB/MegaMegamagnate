@@ -1,6 +1,6 @@
 import Cookies from './lib/js.cookie.min.js'
 
-let settings = JSON.parse($('#mm_settings').val())
+let settings = window.mmm_settings
 var casinos = {
 	slowMode: false,
 	salirEnBote: false,
