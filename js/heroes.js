@@ -13,7 +13,7 @@ module.exports = {
         }
       }).done(msg => {
         if (msg['url'] != '') {
-          let lvl = window.parseInt(document.querySelector('.tablaContenido2').innerHTML.substring(document.querySelector('.tablaContenido2').innerHTML.indexOf('Lvl ') + 4, document.querySelector('.tablaContenido2').innerHTML.indexOf(' - ')))
+          let lvl = window.parseInt(document.querySelector('.tablaContenido2:not(.tablaok)').innerHTML.substring(document.querySelector('.tablaContenido2:not(.tablaok)').innerHTML.indexOf('Lvl ') + 4, document.querySelector('.tablaContenido2:not(.tablaok)').innerHTML.indexOf(' - ')))
           let heroType = window.parseInt(document.querySelector('#habilidad1').src.substring(document.querySelector('#habilidad1').src.indexOf('.gif') - 3, document.querySelector('#habilidad1').src.indexOf('.gif') - 2))
           let energy = window.parseInt(document.querySelector('#energia_left').innerHTML)
           let exp = window.parseInt(document.querySelector('#puntos_left').innerHTML)
