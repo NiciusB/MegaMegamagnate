@@ -1,6 +1,6 @@
 module.exports = {
   init() {
-    let costes = [[80, 100, 150], [80, 100, 150], [100, 200, 200]]
+    let costes = [[80, 100, 150], [80, 100, 100], [100, 200, 200]]
     window.useSkill = (idl, skill) => {
       $.ajax({
         type: 'POST',
