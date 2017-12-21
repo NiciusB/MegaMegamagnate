@@ -1,5 +1,4 @@
 let settings = window.mmm_settings
-if (!settings.hilo_leastChances) settings.hilo_leastChances = 40
 
 var chances = { hi: 0, lo: 0 }
 var cardPool = []
@@ -23,10 +22,10 @@ function getChances(type, currentNumber) {
 }
 
 function mereceLaPena() {
+  if (!settings.hilo_mereceLaPena) return true
   let bote = window.parseInt(document.querySelector('#bote').innerHTML.replace(/\./g, ''))
   let combo = window.parseFloat(document.querySelector('.comboBox').innerHTML.replace('x', ''))
-  if (combo * bote > 10000000) combo = 10000000 / bote
-  //console.log(chances.hi / 100, combo, chances.hi / 100 * combo, window.parseFloat(chances.hi / 100 * combo) > 1)
+  if (combo * bote > settings.hilo_exitOn) combo = settings.hilo_exitOn / bote
   if (chances.hi > chances.lo) {
     return window.parseFloat(chances.hi / 100 * combo) > 1
   } else {
@@ -96,7 +95,7 @@ module.exports = {
     $('<a class="boton" style="width: 100px">La más probable</a><br><br>').insertBefore('#endGame').click(apostarLaMejor)
     $('<a id="auto-boton" class="boton" style="width: 100px;"></a><br><br>').prependTo('.cajaHilo').click(changeHiLoAuto)
     $('<div id=\'chances\'></div>').insertAfter('.cajaHilo')
-    $('<span style=\'margin: 1em 0;color:#333;\'>Modo Auto: Seguirá apostando mientras tengas al menos un ' + settings.hilo_leastChances + '% de posibilidades de ganar, y hasta que no llegues a la cantidad objetivo ' + new Intl.NumberFormat('es-ES').format(settings.hilo_exitOn) + '</span>').appendTo('.cajaHilo')
+    $('<span style=\'margin: 1em 0;color:#333;\'>Modo Auto: Seguirá apostando mientras no llegues a la cantidad objetivo ' + new Intl.NumberFormat('es-ES').format(settings.hilo_exitOn) + '</span><br><span>Sólo si merece la pena: Sólo se continuará apostando si el riesgo de la apuesta no es superior a la máxima recompensa obtenible.</span>').appendTo('.cajaHilo')
     $('a[onclick="comienzaJuego()"]').attr('onclick', 'comienzaJuegoSinConfirmar()')
     $('#endGame').attr('onclick', 'playHilo(3)')
     $('#jugadaspendientes').parents('.tablaContenido2').last().after('<div id="HiLoHelper"></div>')
@@ -119,14 +118,12 @@ module.exports = {
       if (!isPlaying || hasLostOrSold) {
         window.comienzaJuegoSinConfirmar()
       } else {
-        if (chances.lo >= parseInt(settings.hilo_leastChances) || chances.hi >= parseInt(settings.hilo_leastChances)) {
-          var bote = parseInt($('#bote').html().split('.').join(''))
-          if (bote < parseInt(settings.hilo_exitOn) && mereceLaPena()) {
-            apostarLaMejor()
-          } else {
-            window.playHilo(3) // Terminar juego
-          }
-        } else changeHiLoAuto()
+        let bote = parseInt($('#bote').html().split('.').join(''))
+        if (bote < parseInt(settings.hilo_exitOn) && mereceLaPena()) {
+          apostarLaMejor()
+        } else {
+          window.playHilo(3) // Terminar juego
+        }
       }
     }, 100)
 
