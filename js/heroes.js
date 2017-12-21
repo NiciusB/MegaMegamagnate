@@ -18,38 +18,44 @@ module.exports = {
           let energy = window.parseInt(document.querySelector('#energia_left').innerHTML)
           let exp = window.parseInt(document.querySelector('#puntos_left').innerHTML)
           let maxEnergy = window.parseInt(document.querySelector('#energia_maxima').innerHTML)
-          let maxExp = window.parseInt(document.getElementById('puntos_left').parentNode.innerHTML.substring(document.getElementById('puntos_left').parentNode.innerHTML.indexOf('/') + 8).trim())
+          let maxExp = window.parseInt(document.querySelector('#puntos_left').parentNode.innerHTML.substring(document.querySelector('#puntos_left').parentNode.innerHTML.indexOf('/') + 8).trim())
+          let newExp = exp + costes[heroType - 1][skill - 1]
+          if (newExp >  maxExp) {
+            newExp -= maxExp
+            maxExp += 1000
+            document.querySelector('#puntos_left').parentNode.innerHTML = document.querySelector('#puntos_left').parentNode.innerHTML.replace(`/ ${maxExp}`, `/ ${maxExp + 1000}`)
+          }
           document.querySelector('#barra_energia').style.width = `${((energy - costes[heroType - 1][skill - 1]) / maxEnergy) * 109}px`
-          document.querySelector('#barra_experiencia').style.width = `${((exp + costes[heroType - 1][skill - 1]) / maxExp) * 109}px`
+          document.querySelector('#barra_experiencia').style.width = `${(newExp / maxExp) * 109}px`
           document.querySelector('#energia_left').innerHTML = energy - costes[heroType - 1][skill - 1]
-          document.querySelector('#puntos_left').innerHTML = exp + costes[heroType - 1][skill - 1]
-          let msg
+          document.querySelector('#puntos_left').innerHTML = newExp
+          let divHeader
           if (heroType == 1) {
             if (skill == 1) {
-              msg = `+${20 * lvl} fuerza`
+              divHeader = `+${20 * lvl} fuerza`
             } else if (skill == 2) {
-              msg = `+${100 + (5 * lvl)} saboteadores`
+              divHeader = `+${100 + (5 * lvl)} saboteadores`
             } else {
-              msg = '+1 sabotaje'
+              divHeader = '+1 sabotaje'
             }
           } else if (heroType == 2) {
             if (skill == 1) {
-              msg = `+${20 * lvl} defensa`
+              divHeader = `+${20 * lvl} defensa`
             } else if (skill == 2) {
-              msg = `+${500 + (10 * lvl)} guardias`
+              divHeader = `+${500 + (10 * lvl)} guardias`
             } else {
-              msg = '+1 seguridad'
+              divHeader = '+1 seguridad'
             }
           } else {
             if (skill == 1) {
-              msg = 'Herida Letal ON'
+              divHeader = 'Herida Letal ON'
             } else if (skill == 2) {
-              msg = '+Regeneración Rápida'
+              divHeader = '+Regeneración Rápida'
             } else {
-              msg = '+Pierde Mitad de Vida'
+              divHeader = '+Pierde Mitad de Vida'
             }
           }
-          this.msg(msg, costes[heroType - 1][skill - 1])
+          this.msg(divHeader, costes[heroType - 1][skill - 1])
         } else {
           window.jAlert(msg['mensaje'], 'Lideres')
         }
@@ -57,18 +63,21 @@ module.exports = {
     }
   },
   msg(bonus, spent) {
+    let numMsgs = document.querySelectorAll('.infoDiv').length + 1
     let infoDiv = document.createElement('div')
-    infoDiv.id = 'infoDiv'
-    infoDiv.style.cssText = `display: none; position: absolute; borde-radius: 3px; top: ${window.innerHeight - 70}px; left: 10px; background: #333; font-size: 11px; font-family: 'Arial'; padding: 10px 15px;`
+    infoDiv.className = 'infoDiv'
+    infoDiv.style.cssText = `display: none; position: absolute; border: 1px solid rgba(255, 255, 255, .1); border-radius: 3px; top: ${window.innerHeight - (70 * numMsgs)}px; left: 10px; background: #333; font-size: 11px; font-family: 'Arial'; padding: 10px 15px;`
     infoDiv.innerHTML = `
     <span style='color: lightgreen; font-weight: bold; font-size: 13px;'>${bonus}</span> <br>
     <span style='color: red;'>-${spent} Energía</span><br>
     <span style='color: yellow;'>+${spent} EXP</span>
     `
     document.querySelector('body').appendChild(infoDiv)
-    $('#infoDiv').fadeIn()
+    $('.infoDiv').fadeIn()
     window.setTimeout(() => {
-      $('#infoDiv').fadeOut()
+      $('.infoDiv').fadeOut(1000, () => {
+        infoDiv.remove()
+      })
     }, 3000)
   }
 }
