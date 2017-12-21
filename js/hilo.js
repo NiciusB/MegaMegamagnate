@@ -1,4 +1,5 @@
 let settings = window.mmm_settings
+if (!settings.hilo_mereceLaPena) settings.hilo_mereceLaPena = true
 
 var chances = { hi: 0, lo: 0 }
 var cardPool = []
