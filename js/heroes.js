@@ -27,7 +27,7 @@ module.exports = {
             maxExp += 1000
             document.querySelector('#puntos_restantes').innerHTML = window.parseInt(document.querySelector('#puntos_restantes').innerHTML) + 10
             document.querySelector('#puntos_left').parentNode.innerHTML = document.querySelector('#puntos_left').parentNode.innerHTML.replace(`/ ${maxExp}`, `/ ${maxExp + 1000}`)
-            for (let i = 1; i < document.querySelectorAll('[id^=sn]').length; i++) {
+            for (let i = 1; i <= document.querySelectorAll('[id^=sn]').length; i++) {
               document.querySelector(`#sn${i}`).className = ''
               document.querySelector(`#sn${i}`).addEventListener('click', () => {
                 if (window.parseInt(document.querySelector('#puntos_restantes').innerHTML) > 0) {
