@@ -13,6 +13,7 @@ module.exports = {
         }
       }).done(msg => {
         if (msg['url'] != '') {
+          let leaderID = window.parseInt(document.location.href.split('/')[document.location.href.split('/').length - 1])
           let lvl = window.parseInt(document.querySelector('.tablaContenido2:not(.tablaok)').innerHTML.match(/(Lvl)+\s+[0-9]{1,4}/g)[0].replace('Lvl ', ''))
           let heroType = window.parseInt(document.querySelector('#habilidad1').src.substring(document.querySelector('#habilidad1').src.indexOf('.gif') - 3, document.querySelector('#habilidad1').src.indexOf('.gif') - 2))
           let energy = window.parseInt(document.querySelector('#energia_left').innerHTML)
@@ -21,9 +22,25 @@ module.exports = {
           let maxExp = window.parseInt(document.querySelector('#puntos_left').parentNode.innerHTML.substring(document.querySelector('#puntos_left').parentNode.innerHTML.indexOf('/') + 8).trim())
           let newExp = exp + costes[heroType - 1][skill - 1]
           if (newExp >  maxExp) {
+            this.msg(`Tu héroe ha subido al nivel ${lvl + 1}!`)
             newExp -= maxExp
             maxExp += 1000
+            document.querySelector('#puntos_restantes').innerHTML = window.parseInt(document.querySelector('#puntos_restantes').innerHTML) + 10
             document.querySelector('#puntos_left').parentNode.innerHTML = document.querySelector('#puntos_left').parentNode.innerHTML.replace(`/ ${maxExp}`, `/ ${maxExp + 1000}`)
+            for (let i = 1; i < document.querySelectorAll('[id^=sn]').length; i++) {
+              document.querySelector(`#sn${i}`).className = ''
+              document.querySelector(`#sn${i}`).addEventListener('click', () => {
+                if (window.parseInt(document.querySelector('#puntos_restantes').innerHTML) > 0) {
+                  window.subir_puntos(i, leaderID)
+                  document.querySelector('#puntos_restantes').innerHTML = window.parseInt(document.querySelector('#puntos_restantes').innerHTML) - 1
+                } else {
+                  for (let i = 1; i <= document.querySelectorAll('[id^=sn]').length; i++) {
+                    document.querySelector(`#sn${i}`).className = 'transparente'
+                    document.querySelector(`#sn${i}`).addEventListener('click', e => e.preventDefault())
+                  }
+                }
+              })
+            }
           }
           document.querySelector('#barra_energia').style.width = `${((energy - costes[heroType - 1][skill - 1]) / maxEnergy) * 109}px`
           document.querySelector('#barra_experiencia').style.width = `${(newExp / maxExp) * 109}px`
@@ -68,8 +85,10 @@ module.exports = {
     infoDiv.className = 'infoDiv'
     infoDiv.style.cssText = `display: none; position: fixed; border: 1px solid rgba(255, 255, 255, .1); border-radius: 3px; top: ${window.innerHeight - (70 * numMsgs)}px; left: 10px; background: #333; font-size: 11px; font-family: 'Arial'; padding: 10px 15px;`
     infoDiv.innerHTML = `
-      <span style='color: lightgreen; font-weight: bold; font-size: 13px;'>${bonus}</span> <br>
-      <span style='color: red;'>-${spent} Energía</span><br>
+      <span style='color: lightgreen; font-weight: bold; font-size: 13px;'>${bonus}</span>
+    `
+    if (spent) infoDiv.innerHTML += `
+      <br><span style='color: red;'>-${spent} Energía</span><br>
       <span style='color: yellow;'>+${spent} EXP</span>
     `
     document.querySelector('body').appendChild(infoDiv)
