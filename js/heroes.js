@@ -13,7 +13,7 @@ module.exports = {
         }
       }).done(msg => {
         if (msg['url'] != '') {
-          let lvl = window.parseInt(document.querySelector('.tablaContenido2:not(.tablaok)').innerHTML.substring(document.querySelector('.tablaContenido2:not(.tablaok)').innerHTML.indexOf('Lvl ') + 4, document.querySelector('.tablaContenido2:not(.tablaok)').innerHTML.indexOf(' - ')))
+          let lvl = window.parseInt(document.querySelector('.tablaContenido2:not(.tablaok)').innerHTML.match(/(Lvl)+\s+[0-9]{1,4}/g)[0].replace('Lvl ', ''))
           let heroType = window.parseInt(document.querySelector('#habilidad1').src.substring(document.querySelector('#habilidad1').src.indexOf('.gif') - 3, document.querySelector('#habilidad1').src.indexOf('.gif') - 2))
           let energy = window.parseInt(document.querySelector('#energia_left').innerHTML)
           let exp = window.parseInt(document.querySelector('#puntos_left').innerHTML)
@@ -66,11 +66,11 @@ module.exports = {
     let numMsgs = document.querySelectorAll('.infoDiv').length + 1
     let infoDiv = document.createElement('div')
     infoDiv.className = 'infoDiv'
-    infoDiv.style.cssText = `display: none; position: absolute; border: 1px solid rgba(255, 255, 255, .1); border-radius: 3px; top: ${window.innerHeight - (70 * numMsgs)}px; left: 10px; background: #333; font-size: 11px; font-family: 'Arial'; padding: 10px 15px;`
+    infoDiv.style.cssText = `display: none; position: fixed; border: 1px solid rgba(255, 255, 255, .1); border-radius: 3px; top: ${window.innerHeight - (70 * numMsgs)}px; left: 10px; background: #333; font-size: 11px; font-family: 'Arial'; padding: 10px 15px;`
     infoDiv.innerHTML = `
-    <span style='color: lightgreen; font-weight: bold; font-size: 13px;'>${bonus}</span> <br>
-    <span style='color: red;'>-${spent} Energía</span><br>
-    <span style='color: yellow;'>+${spent} EXP</span>
+      <span style='color: lightgreen; font-weight: bold; font-size: 13px;'>${bonus}</span> <br>
+      <span style='color: red;'>-${spent} Energía</span><br>
+      <span style='color: yellow;'>+${spent} EXP</span>
     `
     document.querySelector('body').appendChild(infoDiv)
     $('.infoDiv').fadeIn()
