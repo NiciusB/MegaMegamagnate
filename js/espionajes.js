@@ -1,3 +1,5 @@
+import mmUtils from './lib/mm.utils.js'
+
 module.exports = {
 	init() {
 		let espionajes = document.querySelectorAll('.reporteMision')
@@ -35,68 +37,25 @@ module.exports = {
 		return espionajeData
 	},
 	calcProfit(userData) {
+		const edificios = new Array('Estancos', 'Librerías', 'Tiendas de Ropa', 'Mercados', 'Joyerías', 'Discotecas', 'Bancos', 'Gasolineras', 'Centros Comerciales', 'Industrias')
+		const destruccion = new Array(10, 9, 8, 7, 6, 5, 4, 3, 2, 1) //numero de destruccion de edificios
 		let responseData = ''
-		let edificios = new Array('Estancos','Librerías','Tiendas de Ropa','Mercados','Joyerías','Discotecas','Bancos','Gasolineras','Centros Comerciales','Industrias')
-		let destruccion = new Array(10,9,8,7,6,5,4,3,2,1) //numero de destruccion de edificios
-		let bcostes = new Array(125,250,500,1000,2000,4000,8000,16000,32000,64000) //coste de edificio a nivel 0
-		let acostes = new Array(15,30,60,120,240,480,960,1920,3840,7680) //aumentos basicos por grupo de edificios
-		let ccostes = new Array(10,9,8,7,6,5,4,3,2,1) //numero edificios para aumento
 		let scostes = []
 		let capturas = []
 		let cantidades = []
 
-		//calculo beneficio edificio
-		function ben(id) {
-			let ttotal = bcostes[id]
-			ttotal -=  2 * acostes[id]
-			let q = cantidades[id]
-			for (let i = 0; i <= q + 1; i++) {
-				let taumento = acostes[id] * Math.ceil((i / ccostes[id]) + 0.0000000000000001)
-				ttotal += taumento
-			}
-			return ttotal
-		}
-
-		function bent(id) {
-			let ttotal = bcostes[id]
-			ttotal -=  2 * acostes[id]
-			let q = cantidades[id]
-			q -= destruccion[id]
-			for (let i = 0; i <= q + 1; i++) {
-				let taumento = acostes[id] * Math.ceil((i / ccostes[id]) + 0.0000000000000001)
-				ttotal += taumento
-			}
-			if (q >= destruccion[id]) q = destruccion[id]
-			ttotal = Math.round((ttotal * q)/2)
-			return ttotal
-		}
-
-
-		//puntuar miles
-		function puntua(nStr){
-			nStr += ''
-			let x1 = nStr
-
-			let rgx = /(\d+)(\d{3})/
-			while (rgx.test(x1)) {
-				x1 = x1.replace(rgx, '$1' + '.' + '$2')
-			}
-			return x1
-		}
-
 		let dest
-		for(let k = 0; k < userData.length; k++){
+		for (let k = 0; k < userData.length; k++) {
 			let num = userData[k]
 			cantidades[k] = num
 			let quedan = cantidades[k] - destruccion[k]
-			if(quedan < 0){quedan = 0; dest = cantidades[k] } else{dest = destruccion[k] }
+			if (quedan < 0) { quedan = 0; dest = cantidades[k] } else { dest = destruccion[k] }
 
+			scostes[k] = mmUtils.precioEdificio(k + 1, cantidades[k])
+			capturas[k] = mmUtils.dineroRobado(k + 1, cantidades[k])
 
-			scostes[k] = ben(k)
-			capturas[k] = bent(k)
-
-			if(capturas[k]+'' != 'NaN'){
-				responseData += '<br />Si destruyes ' + dest + ' <u>' + edificios[k] + '</u> ganas <b>' + puntua(capturas[k]) + '</b> &euro; y quedarán <i>' + quedan + '</i> edificios. El precio individual es de <u>' + puntua(scostes[k]) + '</u> &euro;.'
+			if (capturas[k] + '' != 'NaN') {
+				responseData += '<br />Si destruyes ' + dest + ' <u>' + edificios[k] + '</u> ganas <b>' + mmUtils.puntuar(capturas[k]) + '</b> &euro; y quedarán <i>' + quedan + '</i> edificios. El precio individual es de <u>' + mmUtils.puntuar(scostes[k]) + '</u> &euro;.'
 			}
 
 		}
@@ -105,8 +64,8 @@ module.exports = {
 		//mas caro
 		let zr = 0
 		let zn = 0
-		for (let m in scostes){
-			if (scostes[m] >= zr){
+		for (let m in scostes) {
+			if (scostes[m] >= zr) {
 				zr = scostes[m]
 				zn = m
 			}
@@ -117,8 +76,8 @@ module.exports = {
 		let mr = 0
 		let mn = 0
 
-		for (let m in capturas){
-			if (capturas[m] >= mr){
+		for (let m in capturas) {
+			if (capturas[m] >= mr) {
 				mr = capturas[m]
 				mn = m
 			}
@@ -126,8 +85,8 @@ module.exports = {
 
 
 
-		responseData += '<br /><br />El edificio más caro es: <u>'+edificios[zn]+'</u> con un precio de <u>'+puntua(scostes[zn])+'</u> &euro;.'
-		responseData += '<br /><b>El edificio más rentable de atacar es: <u>'+edificios[mn]+'</u> ganando <u>'+puntua(capturas[mn])+'</u> &euro;.</b>'
+		responseData += '<br /><br />El edificio más caro es: <u>' + edificios[zn] + '</u> con un precio de <u>' + mmUtils.puntuar(scostes[zn]) + '</u> &euro;.'
+		responseData += '<br /><b>El edificio más rentable de atacar es: <u>' + edificios[mn] + '</u> ganando <u>' + mmUtils.puntuar(capturas[mn]) + '</u> &euro;.</b>'
 		return responseData
 	}
 }
