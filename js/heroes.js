@@ -21,7 +21,7 @@ module.exports = {
           let maxEnergy = window.parseInt(document.querySelector('#energia_maxima').innerHTML)
           let maxExp = window.parseInt(document.querySelector('#puntos_left').parentNode.innerHTML.substring(document.querySelector('#puntos_left').parentNode.innerHTML.indexOf('/') + 8).trim())
           let newExp = exp + costes[heroType - 1][skill - 1]
-          if (newExp >  maxExp) {
+          if (newExp >=  maxExp) {
             this.msg(`Tu héroe ha subido al nivel ${lvl + 1}!`)
             newExp -= maxExp
             maxExp += 1000
