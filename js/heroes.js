@@ -15,6 +15,7 @@ module.exports = {
         boton.className = 'boton'
         boton.id = 'useAll'
         boton.style.display = 'block'
+        boton.style.textAlign = 'center'
         boton.innerText = 'Activar todo'
         boton.addEventListener('click', () => {
           this.useAll()
@@ -71,6 +72,7 @@ module.exports = {
   },
   useAll() {
     let usages = window.parseInt(window.parseInt(document.querySelector('#energia_left').innerHTML) / 100)
+    if (usages < 1) return false
     let promises = []
     for (let i = 0; i < usages; i++) {
       promises.push(new Promise(resolve => {
