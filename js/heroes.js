@@ -1,7 +1,7 @@
 module.exports = {
   init() {
     this.costes = [[80, 100, 150], [80, 100, 100], [100, 200, 200]]
-    this.leaderID = window.parseInt(document.querySelectorAll('[onclick*=infoh2]')[0].getAttribute('onclick').substring(document.querySelectorAll('[onclick*=infoh2]')[0].getAttribute('onclick').indexOf('useSkill(') + 9, document.querySelectorAll('[onclick*=infoh2]')[0].getAttribute('onclick').indexOf(');')).split(',')[0])
+    this.leaderID = window.parseInt(document.querySelectorAll('[onclick*=infoh]')[0].getAttribute('onclick').substring(document.querySelectorAll('[onclick*=infoh]')[0].getAttribute('onclick').indexOf('useSkill(') + 9, document.querySelectorAll('[onclick*=infoh]')[0].getAttribute('onclick').indexOf(');')).split(',')[0])
     this.lvl = window.parseInt(document.querySelector('.tablaContenido2:not(.tablaok)').innerHTML.match(/(Lvl)+\s+[0-9]{1,4}/g)[0].replace('Lvl ', ''))
     this.heroType = window.parseInt(document.querySelector('#habilidad1').src.substring(document.querySelector('#habilidad1').src.indexOf('.gif') - 3, document.querySelector('#habilidad1').src.indexOf('.gif') - 2))
     this.energy = window.parseInt(document.querySelector('#energia_left').innerHTML)
