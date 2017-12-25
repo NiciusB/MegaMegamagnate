@@ -61,6 +61,7 @@ module.exports = {
 			let ttotal = bcostes[id]
 			ttotal -=  2 * acostes[id]
 			let q = cantidades[id]
+			q -= destruccion[id]
 			for (let i = 0; i <= q + 1; i++) {
 				let taumento = acostes[id] * Math.ceil((i / ccostes[id]) + 0.0000000000000001)
 				ttotal += taumento
