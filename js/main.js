@@ -4,7 +4,6 @@ import casinos from './casinos.js'
 import HiLo from './hilo.js'
 import inbox from './inbox.js'
 import chat from './chat.js'
-import misiones from './misiones.js'
 import heroes from './heroes.js'
 
 if (document.querySelector('.chatMC')) chat.init() // Solo si estas en una MC
@@ -24,9 +23,6 @@ function switchLocation(loc) {
     break
   case 'messages':
     if (loc[1] === 'inbox') inbox.init()
-    break
-  case 'missions':
-    misiones.init()
     break
   case 'heroes':
     heroes.init()
