@@ -33,12 +33,16 @@ module.exports = {
         }
         return ttotal
     },
-    paybackOptimizarNegocio(arrayCantidadEdificios, precioOptimizar) {
+    infoOptimizarNegocio(arrayCantidadEdificios, precioOptimizar) {
+        precioOptimizar = parseInt(precioOptimizar)
         var suma = 0
         for (var k = 0; k < edificios.length; k++) {
             suma += e_aumentoPorOptimizar[k] * arrayCantidadEdificios[k]
         }
-        return this.puntuar(parseInt(precioOptimizar) / suma)
+        return {
+            payback: this.puntuar(precioOptimizar / suma),
+            ingresosGanados: this.puntuar(suma)
+        }
     },
     puntuar(nStr) {
         nStr = Math.round(parseFloat(nStr) * 10) / 10 + ''

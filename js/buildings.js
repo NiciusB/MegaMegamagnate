@@ -31,7 +31,11 @@ module.exports = {
 		})
 		mmUtils.redoTooltips()
 		const precioOptimizar = $('#precioOptimizarNegocio').val().split('.').join('')
-		if (precioOptimizar) $('#paybackOptimizarNegocio').html(mmUtils.paybackOptimizarNegocio(arrayCantidadEdificios, precioOptimizar) + ' días')
+		if (precioOptimizar) {
+			const optimizarInfo = mmUtils.infoOptimizarNegocio(arrayCantidadEdificios, precioOptimizar)
+			$('#ingresosOptimizarNegocio').html(optimizarInfo.ingresosGanados)
+			$('#paybackOptimizarNegocio').html(optimizarInfo.payback + ' días')
+		}
 	},
 	init() {
 		// verificarPrecio se llama después de comprar un edificio y parsear el ajax
@@ -52,7 +56,9 @@ module.exports = {
 			</tr>
 			<tr>
 				<td>
-					<p style="display:inline" title="Días hasta recuperar inversión">- Pay back: <span id="paybackOptimizarNegocio">?</span></p>
+				<p style="display:inline" title="Ingresos ganados">- Bºs al dia: <span id="ingresosOptimizarNegocio">?</span></p>
+				<br>
+				<p style="display:inline" title="Días hasta recuperar inversión">- Pay back: <span id="paybackOptimizarNegocio">?</span></p>
 				</td>
 			</tr>
 			</table>
