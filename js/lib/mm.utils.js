@@ -33,15 +33,16 @@ module.exports = {
         }
         return ttotal
     },
-    rentabilidadOptimizarNegocio(arrayCantidadEdificios, precioOptimizar) {
+    paybackOptimizarNegocio(arrayCantidadEdificios, precioOptimizar) {
         var suma = 0
         for (var k = 0; k < edificios.length; k++) {
             suma += e_aumentoPorOptimizar[k] * arrayCantidadEdificios[k]
         }
+        return this.puntuar(parseInt(precioOptimizar) / suma)
         return Math.floor(suma / parseInt(precioOptimizar) * 10000) / 100
     },
     puntuar(nStr) {
-        nStr += ''
+        nStr = Math.round(parseFloat(nStr) * 10) / 10 + ''
         let x1 = nStr
 
         let rgx = /(\d+)(\d{3})/
