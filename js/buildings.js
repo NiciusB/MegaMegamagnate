@@ -6,13 +6,19 @@ module.exports = {
 		$('.tablaContenido2 tr').each(function () {
 			if ($(this).attr('id')) {
 				if (!$(this).find('.eficiencia_precio').length) { // First time
-					$(this).find('.imageListadoDiv').css('margin-bottom', '5em')
+					const generatedFirstColumn = $('<div></div>').css('text-align', 'center').css('padding', '0 0.5em')
+					generatedFirstColumn.append($(this).find('.imageListadoDiv').css('margin-bottom', '0').css('margin-right', '0').css('background-repeat', 'no-repeat').css('float', 'none').prop('outerHTML'))
+					generatedFirstColumn.append($(this).find('p a.boton').css('margin-top', '0.75em').css('float', 'none'))
+					$(this).find('td .imageListadoDiv').remove()
+					$(this).find('td p a.boton').parent().remove()
+					const generatedMainContent = $('<div class="mainContent"></div>').html($(this).find('td').html())
+					$(this).find('td').empty().css('display', 'flex').css('flex-direction', 'row').append(generatedFirstColumn).append(generatedMainContent).appendTo(this)
 					$(this).find('br').last()
-					.before('<br><p style="display:inline" title="Dinero que recibe el atacante por atacar este edificio">- Dinero para atacante: <span class="dinero_para_atacante"></span></p>')
-					.before('<br><p style="display:inline" title="Coste de recuperarte de un ataque (Volver a comprar los edificios destruidos)">- Coste de recuperación: <span class="coste_recuperacion_ataque"></span></p>')
-					.before('<br><p style="display:inline" title="Beneficios diarios / Precio">- Eficiencia sobre precio: <span class="eficiencia_precio"></span></p>')
-					.before('<br><p style="display:inline" title="Beneficios diarios * Edificios destruidos al atacar (1, 2, 3, etc) / Coste de recuperación">- Eficiencia sobre recuperación: <span class="eficiencia_recuperacion"></span></p>')
-					//.before('<br><p style="display:inline" title="Eficiencia 1 * Eficiencia 2 * 100">- Eficiencia total: <span class="eficiencia_total"></span></p>')
+						.before('<br><p style="display:inline" title="Dinero que recibe el atacante por atacar este edificio">- Dinero para atacante: <span class="dinero_para_atacante"></span></p>')
+						.before('<br><p style="display:inline" title="Coste de recuperarte de un ataque (Volver a comprar los edificios destruidos)">- Coste de recuperación: <span class="coste_recuperacion_ataque"></span></p>')
+						.before('<br><p style="display:inline" title="Beneficios diarios / Precio">- Eficiencia sobre precio: <span class="eficiencia_precio"></span></p>')
+						.before('<br><p style="display:inline" title="Beneficios diarios * Edificios destruidos al atacar (1, 2, 3, etc) / Coste de recuperación">- Eficiencia sobre recuperación: <span class="eficiencia_recuperacion"></span></p>')
+						//.before('<br><p style="display:inline" title="Eficiencia 1 * Eficiencia 2 * 100">- Eficiencia total: <span class="eficiencia_total"></span></p>')
 				}
 
 				const ed_id = parseInt($(this).attr('id').replace('cachoEdificio', ''))
