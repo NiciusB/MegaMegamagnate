@@ -52,7 +52,7 @@ module.exports = {
 			if (quedan < 0) { quedan = 0; dest = cantidades[k] } else { dest = destruccion[k] }
 
 			scostes[k] = mmUtils.precioEdificio(k + 1, cantidades[k])
-			capturas[k] = mmUtils.dineroRobado(k + 1, cantidades[k])
+			capturas[k] = mmUtils.dineroRobadoEdificios(k + 1, cantidades[k])
 
 			if (capturas[k] + '' != 'NaN') {
 				responseData += '<br />Si destruyes ' + dest + ' <u>' + edificios[k] + '</u> ganas <b>' + mmUtils.puntuar(capturas[k]) + '</b> &euro; y quedarán <i>' + quedan + '</i> edificios. El precio individual es de <u>' + mmUtils.puntuar(scostes[k]) + '</u> &euro;.'
