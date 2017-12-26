@@ -113,6 +113,7 @@ module.exports = {
     changeHiLoAuto()
 
     setInterval(() => {
+      if (document.querySelector('#popup_container') && window.HiLoAuto) changeHiLoAuto()
       if (!window.HiLoAuto || window.flagPlaying) return false
       var isPlaying = $('#cajaJugando').css('display') !== 'none'
       var hasLostOrSold = $('.hilo_content').css('display') === 'none'

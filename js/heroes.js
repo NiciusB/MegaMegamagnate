@@ -35,8 +35,8 @@ module.exports = {
           'skill': skill
         }
       }).done(msg => {
-        this.doItDad(skill)
         if (msg['url'] != '') {
+          this.doItDad(skill)
           let divHeader
           if (this.heroType == 1) {
             if (skill == 1) {
