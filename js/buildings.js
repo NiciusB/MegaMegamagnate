@@ -71,8 +71,7 @@ module.exports = {
 				type: "GET",
 				url: "/research"
 		}).done(msg => {
-			const price = parseInt($(msg).find('#pskill5').html().split('.').join(''))
-			$('#precioOptimizarNegocio').val(price)
+			$('#precioOptimizarNegocio').val($(msg).find('#pskill5').html())
 			this.calcNewInfo()
 		})
 	}
