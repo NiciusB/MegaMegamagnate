@@ -29,6 +29,7 @@ module.exports = {
 				$(this).find('.dinero_para_atacante').html(mmUtils.puntuar(dinero_para_atacante))
 			}
 		})
+		mmUtils.redoTooltips()
 		const precioOptimizar = $('#precioOptimizarNegocio').val().split('.').join('')
 		if (precioOptimizar) $('#paybackOptimizarNegocio').html(mmUtils.paybackOptimizarNegocio(arrayCantidadEdificios, precioOptimizar) + ' días')
 	},
