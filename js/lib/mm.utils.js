@@ -51,7 +51,24 @@ module.exports = {
         return x1
     },
     redoTooltips() {
-        // xd
-        var _0xa2d4=["\x70\x61\x67\x65\x58","\x70\x61\x67\x65\x59","\x63\x73\x73","\x2E\x6D\x61\x73\x74\x65\x72\x54\x6F\x6F\x6C\x74\x69\x70","\x6D\x6F\x75\x73\x65\x6D\x6F\x76\x65","\x64\x61\x74\x61","\x61\x74\x74\x72","\x72\x65\x6D\x6F\x76\x65\x41\x74\x74\x72","\x74\x69\x70\x54\x65\x78\x74","\x66\x61\x73\x74","\x66\x61\x64\x65\x49\x6E","\x62\x6F\x64\x79","\x61\x70\x70\x65\x6E\x64\x54\x6F","\x74\x65\x78\x74","\x3C\x70\x20\x63\x6C\x61\x73\x73\x3D\x22\x6D\x61\x73\x74\x65\x72\x54\x6F\x6F\x6C\x74\x69\x70\x22\x3E\x3C\x2F\x70\x3E","\x72\x65\x6D\x6F\x76\x65","\x68\x6F\x76\x65\x72","\x2E\x74\x6F\x6F\x6C\x54\x69\x70","\x72\x65\x61\x64\x79"];$(document)[_0xa2d4[18]](function(){$(_0xa2d4[17])[_0xa2d4[16]](function(){var _0xf14ax4=$(this)[_0xa2d4[6]](_0xa2d4[5]);$(this)[_0xa2d4[5]](_0xa2d4[8],_0xf14ax4)[_0xa2d4[7]](_0xa2d4[5]);$(_0xa2d4[14])[_0xa2d4[13]](_0xf14ax4)[_0xa2d4[12]](_0xa2d4[11])[_0xa2d4[10]](_0xa2d4[9])},function(){$(this)[_0xa2d4[6]](_0xa2d4[5],$(this)[_0xa2d4[5]](_0xa2d4[8]));$(_0xa2d4[3])[_0xa2d4[15]]()})[_0xa2d4[4]](function(_0xf14ax1){var _0xf14ax2=_0xf14ax1[_0xa2d4[0]]+ 0;var _0xf14ax3=_0xf14ax1[_0xa2d4[1]]+ 10;$(_0xa2d4[3])[_0xa2d4[2]]({top:_0xf14ax3,left:_0xf14ax2})})})
+        // https://www.dcode.fr/javascript-unobfuscator
+        // http://jsbeautifier.org/
+        $(document)['ready'](function () {
+            $('.toolTip')['hover'](function () {
+                var _0xf14ax4 = $(this)['attr']('data')
+                $(this)['data']('tipText', _0xf14ax4)['removeAttr']('data')
+                $('masterTooltip')['text'](_0xf14ax4)['appendTo']('body')['fadeIn']('fast')
+            }, function () {
+                $(this)['attr']('data', $(this)['data']('tipText'))
+                $('.masterTooltip')['remove']()
+            })['mousemove'](function (_0xf14ax1) {
+                var _0xf14ax2 = _0xf14ax1['pageX'] + 0
+                var _0xf14ax3 = _0xf14ax1['pageY'] + 10
+                $('.masterTooltip')['css']({
+                    top: _0xf14ax3,
+                    left: _0xf14ax2
+                })
+            })
+        })
     }
 }
