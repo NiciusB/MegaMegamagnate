@@ -6,7 +6,11 @@ const ccostes = new Array(10, 9, 8, 7, 6, 5, 4, 3, 2, 1) //numero edificios para
 const e_aumentoPorOptimizar = [15, 30, 60, 120, 240, 480, 960, 1920, 3840, 7680] //aumento por optimizar
 
 module.exports = {
-    dineroRobado(id, q) {
+    edificiosDestruidos(q) {
+        q--
+        return destruccion[q]
+    },
+    dineroRobadoEdificios(id, q) {
         id--
         let ttotal = bcostes[id]
         ttotal -= 2 * acostes[id]

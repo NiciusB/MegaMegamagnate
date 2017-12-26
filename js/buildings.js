@@ -10,7 +10,7 @@ module.exports = {
 					$(this).find('br').last()
 						.before('<br><p style="display:inline" title="Dinero que recibe el atacante por atacar este edificio">- Dinero para atacante: <span class="dinero_para_atacante"></span></p>')
 						.before('<br><p style="display:inline" title="Beneficios diarios / Precio">- Eficiencia sobre precio: <span class="eficiencia_precio"></span></p>')
-						.before('<br><p style="display:inline" title="Beneficios diarios / Dinero para atacante">- Eficiencia sobre dinero para atacante: <span class="eficiencia_atacante"></span></p>')
+						.before('<br><p style="display:inline" title="Beneficios diarios * Edificios destruidos al atacar (1, 2, 3, etc) / Dinero para atacante">- Eficiencia sobre dinero para atacante: <span class="eficiencia_atacante"></span></p>')
 						//.before('<br><p style="display:inline" title="Eficiencia 1 * Eficiencia 2 * 100">- Eficiencia total: <span class="eficiencia_total"></span></p>')
 				}
 
@@ -19,9 +19,9 @@ module.exports = {
 				const cantidad = parseInt($('#ned' + ed_id).html().split('.').join(''))
 				arrayCantidadEdificios.push(cantidad)
 				const beneficiosdia = parseInt($(this).text().split(': +')[2].split('\n')[0].split('.').join(''))
-				const dinero_para_atacante = mmUtils.dineroRobado(ed_id, cantidad)
+				const dinero_para_atacante = mmUtils.dineroRobadoEdificios(ed_id, cantidad)
 				const eficiencia_precio = beneficiosdia / precio
-				const eficiencia_atacante = beneficiosdia / dinero_para_atacante
+				const eficiencia_atacante = beneficiosdia * mmUtils.edificiosDestruidos(ed_id) / dinero_para_atacante
 				//const eficiencia_total = eficiencia_atacante * eficiencia_precio * 100
 
 				$(this).find('.eficiencia_precio').html((eficiencia_precio * 100).toFixed(2) + '%')
