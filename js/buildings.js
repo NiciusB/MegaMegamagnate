@@ -8,9 +8,9 @@ module.exports = {
 				if (!$(this).find('.mainContent').length) { // First time
 					const generatedFirstColumn = $('<div></div>').css('text-align', 'center').css('padding', '0 0.5em')
 					generatedFirstColumn.append($(this).find('.imageListadoDiv').css('margin-bottom', '0').css('margin-right', '0').css('background-repeat', 'no-repeat').css('float', 'none').prop('outerHTML'))
-					generatedFirstColumn.append($(this).find('p a.boton').css('margin-top', '0.75em').css('float', 'none'))
+					generatedFirstColumn.append($(this).find('p a').css('margin-top', '0.75em').css('float', 'none'))
 					$(this).find('td .imageListadoDiv').remove()
-					$(this).find('td p a.boton').parent().remove()
+					$(this).find('td p a').parent().remove()
 					const generatedMainContent = $('<div class="mainContent"></div>').html($(this).find('td').html())
 					$(this).find('td').empty().css('display', 'flex').css('flex-direction', 'row').append(generatedFirstColumn).append(generatedMainContent).appendTo(this)
 					$(this).find('br').last()
