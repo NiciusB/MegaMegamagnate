@@ -44,6 +44,10 @@ var casinos = {
 		var delta = new Date() * 1 - casinos.lastTs
 		casinos.lastTs = new Date() * 1
 		if (!casinoCerrado && casinos.auto) {
+      if (document.querySelector('#popup_container')) {
+        document.querySelector('div button:first-child').click()
+        return false
+      }
 			var bote = parseInt($('#mbote').html().split('.').join(''))
 
 			if (casinos.salirEnBote && bote < casinos.lastBote) {
