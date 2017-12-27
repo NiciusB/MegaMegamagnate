@@ -10,7 +10,7 @@ module.exports = {
     this.maxExp = window.parseInt(document.querySelector('#puntos_left').parentNode.innerHTML.substring(document.querySelector('#puntos_left').parentNode.innerHTML.indexOf('/') + 8).trim())
     let observer = new MutationObserver(() => {
       let skill = window.parseInt(document.querySelector('[onclick^=useSkill]').getAttribute('onclick').split(',')[1].replace(');', ''))
-      if (!document.querySelector('#useAll') && skill == 2) {
+      if (!document.querySelector('#useAll') && this.heroType != 3 && skill == 2) {
         let boton = document.createElement('a')
         boton.className = 'boton'
         boton.id = 'useAll'
