@@ -33,15 +33,19 @@ module.exports = {
         }
         return ttotal
     },
-    rentabilidadOptimizarNegocio(arrayCantidadEdificios, precioOptimizar) {
+    infoOptimizarNegocio(arrayCantidadEdificios, precioOptimizar) {
+        precioOptimizar = parseInt(precioOptimizar)
         var suma = 0
         for (var k = 0; k < edificios.length; k++) {
             suma += e_aumentoPorOptimizar[k] * arrayCantidadEdificios[k]
         }
-        return Math.floor(suma / parseInt(precioOptimizar) * 10000) / 100
+        return {
+            payback: this.puntuar(precioOptimizar / suma),
+            ingresosGanados: this.puntuar(suma)
+        }
     },
     puntuar(nStr) {
-        nStr += ''
+        nStr = Math.round(parseFloat(nStr) * 10) / 10 + ''
         let x1 = nStr
 
         let rgx = /(\d+)(\d{3})/
@@ -49,5 +53,26 @@ module.exports = {
             x1 = x1.replace(rgx, '$1' + '.' + '$2')
         }
         return x1
+    },
+    redoTooltips() {
+        // https://www.dcode.fr/javascript-unobfuscator
+        // http://jsbeautifier.org/
+        $(document)['ready'](function () {
+            $('.toolTip')['hover'](function () {
+                var _0xf14ax4 = $(this)['attr']('data')
+                $(this)['data']('tipText', _0xf14ax4)['removeAttr']('data')
+                $('masterTooltip')['text'](_0xf14ax4)['appendTo']('body')['fadeIn']('fast')
+            }, function () {
+                $(this)['attr']('data', $(this)['data']('tipText'))
+                $('.masterTooltip')['remove']()
+            })['mousemove'](function (_0xf14ax1) {
+                var _0xf14ax2 = _0xf14ax1['pageX'] + 0
+                var _0xf14ax3 = _0xf14ax1['pageY'] + 10
+                $('.masterTooltip')['css']({
+                    top: _0xf14ax3,
+                    left: _0xf14ax2
+                })
+            })
+        })
     }
 }
