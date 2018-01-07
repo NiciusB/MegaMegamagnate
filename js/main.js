@@ -47,7 +47,7 @@ window.formatNumber = function (numero) {
 if(!settings.general_playButton) $('.trozoLogin a[href="https://play.google.com/store/apps/details?id=net.megamagnate"]').hide()
 
 if (settings.general_moneyTimer) {
-  $('.cajaDinero').css('font-family', 'monospace').prepend('<span id="tiempoHastaLlenado" style="font-size: 0.225em;color:#aaa;"></span>')
+  $('.cajaDinero').css('font-family', 'monospace').prepend('<span style="font-size: 0.225em;color:#aaa;"></span>')
   $('#cajetoDinero').css('font-size', '0.85em').html(window.formatNumber(window.dinero))
   if ($('#cajetoDinero').attr('data')) {
     setInterval(() => {
@@ -65,9 +65,9 @@ if (settings.general_moneyTimer) {
       var al_segundo = parseFloat($('#alsegundo').html())
       var segundos_que_quedan = (limite_caja - window.dinero) / al_segundo
       if (segundos_que_quedan > 0) {
-        $('#tiempoHastaLlenado').html(toHHMMSS(segundos_que_quedan) + ' hasta llenado')
+        $('.cajaDinero>span:first').html(toHHMMSS(segundos_que_quedan) + ' hasta llenado')
       } else {
-        $('#tiempoHastaLlenado').html('Lleno')
+        $('.cajaDinero>span:first').html('Lleno')
       }
     }, 500)
   }
@@ -80,7 +80,7 @@ try {
 }
 
 $('.menuOpciones:last').append(`
-<a data="discordMenu" target="_blank" href="https://discord.gg/juYwrx5"><p id="discordMenu">
+<a target="_blank" href="https://discord.gg/juYwrx5"><p>
   - Discord <img src="https://discordapp.com/assets/1c8a54f25d101bdc607cec7228247a9a.svg" style="
   width: 1em;
   height: 1em;
