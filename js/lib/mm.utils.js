@@ -1,27 +1,23 @@
-const edificios = new Array('Estancos', 'Librerías', 'Tiendas de Ropa', 'Mercados', 'Joyerías', 'Discotecas', 'Bancos', 'Gasolineras', 'Centros Comerciales', 'Industrias')
-const destruccion = new Array(10, 9, 8, 7, 6, 5, 4, 3, 2, 1) //numero de destruccion de edificios
-const bcostes = new Array(125, 250, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000) //coste de edificio a nivel 0
-const acostes = new Array(15, 30, 60, 120, 240, 480, 960, 1920, 3840, 7680) //aumentos basicos por grupo de edificios
-const ccostes = new Array(10, 9, 8, 7, 6, 5, 4, 3, 2, 1) //numero edificios para aumento
-const e_aumentoPorOptimizar = [15, 30, 60, 120, 240, 480, 960, 1920, 3840, 7680] //aumento por optimizar
+const edificios = [false, 'Estancos', 'Librerías', 'Tiendas de Ropa', 'Mercados', 'Joyerías', 'Discotecas', 'Bancos', 'Gasolineras', 'Centros Comerciales', 'Industrias']
+const destruccion = [false, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1] //numero de destruccion de edificios
+const bcostes = [false, 125, 250, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000] //coste de edificio a nivel 0
+const acostes = [false, 15, 30, 60, 120, 240, 480, 960, 1920, 3840, 7680] //aumentos basicos por grupo de edificios
+const ccostes = [false, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1] //numero edificios para aumento
+const e_aumentoPorOptimizar = [false, 15, 30, 60, 120, 240, 480, 960, 1920, 3840, 7680] //aumento por optimizar
 
 const mmUtils = {
     getEdificioName(id) {
-        id--
         return edificios[id]
     },
     edificiosDestruidos(id) {
-        id--
         return destruccion[id]
     },
     dineroRobadoEdificios(id, q) {
-        id--
-        let precio = this.precioEdificio(id + 1, q - destruccion[id])
+        let precio = this.precioEdificio(id, q - destruccion[id])
         if (q > destruccion[id]) q = destruccion[id]
         return Math.round((precio * q) / 2)
     },
     precioEdificio(id, q) {
-        id--
         let ttotal = bcostes[id] - 2 * acostes[id]
         for (let i = 0; i <= q + 1; i++) {
             ttotal += acostes[id] * Math.ceil((i / ccostes[id]) + 0.0000000000000001)
