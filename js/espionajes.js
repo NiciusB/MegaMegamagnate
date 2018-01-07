@@ -37,56 +37,28 @@ module.exports = {
 		return espionajeData
 	},
 	calcProfit(userData) {
-		const edificios = new Array('Estancos', 'Librerías', 'Tiendas de Ropa', 'Mercados', 'Joyerías', 'Discotecas', 'Bancos', 'Gasolineras', 'Centros Comerciales', 'Industrias')
-		const destruccion = new Array(10, 9, 8, 7, 6, 5, 4, 3, 2, 1) //numero de destruccion de edificios
-		let responseData = ''
-		let scostes = []
-		let capturas = []
-		let cantidades = []
-
-		let dest
+		let resultados = []
 		for (let k = 0; k < userData.length; k++) {
-			let num = userData[k]
-			cantidades[k] = num
-			let quedan = cantidades[k] - destruccion[k]
-			if (quedan < 0) { quedan = 0; dest = cantidades[k] } else { dest = destruccion[k] }
-
-			scostes[k] = mmUtils.precioEdificio(k + 1, cantidades[k])
-			capturas[k] = mmUtils.dineroRobadoEdificios(k + 1, cantidades[k])
-
-			if (capturas[k] + '' != 'NaN') {
-				responseData += '<br />Si destruyes ' + dest + ' <u>' + edificios[k] + '</u> ganas <b>' + mmUtils.puntuar(capturas[k]) + '</b> &euro; y quedarán <i>' + quedan + '</i> edificios. El precio individual es de <u>' + mmUtils.puntuar(scostes[k]) + '</u> &euro;.'
-			}
-
-		}
-
-
-		//mas caro
-		let zr = 0
-		let zn = 0
-		for (let m in scostes) {
-			if (scostes[m] >= zr) {
-				zr = scostes[m]
-				zn = m
+			const recompensa = mmUtils.dineroRobadoEdificios(k + 1, userData[k])
+			if (recompensa + '' != 'NaN') {
+				resultados.push({
+					id: k,
+					nombre: mmUtils.getEdificioName(k + 1),
+					recompensa,
+					recuperacion: mmUtils.precioRecuperacion(k + 1, userData[k])
+				})
 			}
 		}
 
+		const best = resultados.reduce((a, b) => a.recompensa > b.recompensa ? a : b)
+		let responseData = ''
+		resultados.forEach(val => {
+			responseData += '<br/>'
+			if (best.id === val.id) responseData += '<b><u>' + val.nombre + '</u></b>'
+			else responseData += '<u>' + val.nombre + '</u>'
+			responseData += ': ganas <b>' + mmUtils.puntuar(val.recompensa) + '</b> &euro; y el coste de recuperación es de <u>' + mmUtils.puntuar(val.recuperacion) + '</u> &euro;.'
+		})
 
-		//mas rentable
-		let mr = 0
-		let mn = 0
-
-		for (let m in capturas) {
-			if (capturas[m] >= mr) {
-				mr = capturas[m]
-				mn = m
-			}
-		}
-
-
-
-		responseData += '<br /><br />El edificio más caro es: <u>' + edificios[zn] + '</u> con un precio de <u>' + mmUtils.puntuar(scostes[zn]) + '</u> &euro;.'
-		responseData += '<br /><b>El edificio más rentable de atacar es: <u>' + edificios[mn] + '</u> ganando <u>' + mmUtils.puntuar(capturas[mn]) + '</u> &euro;.</b>'
 		return responseData
 	}
 }

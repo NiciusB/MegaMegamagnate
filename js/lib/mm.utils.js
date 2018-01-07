@@ -6,6 +6,10 @@ const ccostes = new Array(10, 9, 8, 7, 6, 5, 4, 3, 2, 1) //numero edificios para
 const e_aumentoPorOptimizar = [15, 30, 60, 120, 240, 480, 960, 1920, 3840, 7680] //aumento por optimizar
 
 module.exports = {
+    getEdificioName(id) {
+        id--
+        return edificios[id]
+    },
     edificiosDestruidos(id) {
         id--
         return destruccion[id]
@@ -22,6 +26,14 @@ module.exports = {
         if (q >= destruccion[id]) q = destruccion[id]
         ttotal = Math.round((ttotal * q) / 2)
         return ttotal
+    },
+    precioRecuperacion(id, q) {
+        let total = 0
+        const initial_q = q
+        do {
+            total += this.precioEdificio(id, q--)
+        } while (initial_q - q < this.edificiosDestruidos(id))
+        return total
     },
     precioEdificio(id, q) {
         id--
