@@ -6,9 +6,9 @@ const ccostes = new Array(10, 9, 8, 7, 6, 5, 4, 3, 2, 1) //numero edificios para
 const e_aumentoPorOptimizar = [15, 30, 60, 120, 240, 480, 960, 1920, 3840, 7680] //aumento por optimizar
 
 module.exports = {
-    edificiosDestruidos(q) {
-        q--
-        return destruccion[q]
+    edificiosDestruidos(id) {
+        id--
+        return destruccion[id]
     },
     dineroRobadoEdificios(id, q) {
         id--
@@ -57,21 +57,17 @@ module.exports = {
     redoTooltips() {
         // https://www.dcode.fr/javascript-unobfuscator
         // http://jsbeautifier.org/
-        $(document)['ready'](function () {
-            $('.toolTip')['hover'](function () {
-                var _0xf14ax4 = $(this)['attr']('data')
-                $(this)['data']('tipText', _0xf14ax4)['removeAttr']('data')
-                $('masterTooltip')['text'](_0xf14ax4)['appendTo']('body')['fadeIn']('fast')
-            }, function () {
-                $(this)['attr']('data', $(this)['data']('tipText'))
-                $('.masterTooltip')['remove']()
-            })['mousemove'](function (_0xf14ax1) {
-                var _0xf14ax2 = _0xf14ax1['pageX'] + 0
-                var _0xf14ax3 = _0xf14ax1['pageY'] + 10
-                $('.masterTooltip')['css']({
-                    top: _0xf14ax3,
-                    left: _0xf14ax2
-                })
+        $('.toolTip').hover(function () {
+            var dataAttr = $(this).attr('data')
+            $(this).data('tipText', dataAttr).removeAttr('data')
+            $('<div class="masterTooltip">').text(dataAttr).appendTo('body').fadeIn('fast')
+        }, function () {
+            $(this).attr('data', $(this).data('tipText'))
+            $('.masterTooltip').remove()
+        }).mousemove(function (event) {
+            $('.masterTooltip').css({
+                top: event.pageY + 10,
+                left: event.pageX + 0
             })
         })
     }
