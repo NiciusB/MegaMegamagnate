@@ -36,16 +36,16 @@ module.exports = {
 		})
 		return espionajeData
 	},
-	calcProfit(userData) {
+	calcProfit(buildings) {
 		let resultados = []
-		for (let k = 0; k < userData.length; k++) {
-			const recompensa = mmUtils.dineroRobadoEdificios(k + 1, userData[k])
+		for (let k = 0; k < buildings.length; k++) {
+			const recompensa = mmUtils.dineroRobadoEdificios(k + 1, buildings[k])
 			if (recompensa + '' != 'NaN') {
 				resultados.push({
 					id: k,
 					nombre: mmUtils.getEdificioName(k + 1),
 					recompensa,
-					recuperacion: mmUtils.precioRecuperacion(k + 1, userData[k])
+					recuperacion: mmUtils.precioRecuperacion(k + 1, buildings[k])
 				})
 			}
 		}
