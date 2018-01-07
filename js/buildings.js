@@ -4,7 +4,7 @@ module.exports = {
 	calcNewInfo() {
 		var arrayCantidadEdificios = []
 		$('.tablaContenido2 tr').each(function () {
-			if ($(this).attr('id')) {
+			if ($(this).attr('id') && $(this).attr('id').indexOf('cachoEdificio') !== -1) {
 				if (!$(this).find('.mainContent').length) { // First time
 					const generatedFirstColumn = $('<div></div>').css('text-align', 'center').css('padding', '0 0.5em')
 					generatedFirstColumn.append($(this).find('.imageListadoDiv').css('margin-bottom', '0').css('margin-right', '0').css('background-repeat', 'no-repeat').css('float', 'none').prop('outerHTML'))
