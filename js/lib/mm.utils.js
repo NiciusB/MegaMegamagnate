@@ -5,7 +5,7 @@ const acostes = new Array(15, 30, 60, 120, 240, 480, 960, 1920, 3840, 7680) //au
 const ccostes = new Array(10, 9, 8, 7, 6, 5, 4, 3, 2, 1) //numero edificios para aumento
 const e_aumentoPorOptimizar = [15, 30, 60, 120, 240, 480, 960, 1920, 3840, 7680] //aumento por optimizar
 
-module.exports = {
+const mmUtils = {
     getEdificioName(id) {
         id--
         return edificios[id]
@@ -16,15 +16,16 @@ module.exports = {
     },
     dineroRobadoEdificios(id, q) {
         id--
-        let ttotal = bcostes[id]
-        ttotal -= 2 * acostes[id]
-        q -= destruccion[id]
+        let precio = this.precioEdificio(id + 1, q - destruccion[id])
+        if (q > destruccion[id]) q = destruccion[id]
+        return Math.round((precio * q) / 2)
+    },
+    precioEdificio(id, q) {
+        id--
+        let ttotal = bcostes[id] - 2 * acostes[id]
         for (let i = 0; i <= q + 1; i++) {
-            let taumento = acostes[id] * Math.ceil((i / ccostes[id]) + 0.0000000000000001)
-            ttotal += taumento
+            ttotal += acostes[id] * Math.ceil((i / ccostes[id]) + 0.0000000000000001)
         }
-        if (q >= destruccion[id]) q = destruccion[id]
-        ttotal = Math.round((ttotal * q) / 2)
         return ttotal
     },
     precioRecuperacion(id, q) {
@@ -34,16 +35,6 @@ module.exports = {
             total += this.precioEdificio(id, q--)
         } while (initial_q - q < this.edificiosDestruidos(id))
         return total
-    },
-    precioEdificio(id, q) {
-        id--
-        let ttotal = bcostes[id]
-        ttotal -= 2 * acostes[id]
-        for (let i = 0; i <= q + 1; i++) {
-            let taumento = acostes[id] * Math.ceil((i / ccostes[id]) + 0.0000000000000001)
-            ttotal += taumento
-        }
-        return ttotal
     },
     infoOptimizarNegocio(arrayCantidadEdificios, precioOptimizar) {
         precioOptimizar = parseInt(precioOptimizar)
@@ -67,7 +58,6 @@ module.exports = {
         return x1
     },
     redoTooltips() {
-        // https://www.dcode.fr/javascript-unobfuscator
         // http://jsbeautifier.org/
         $('.toolTip').hover(function () {
             var dataAttr = $(this).attr('data')
@@ -84,3 +74,5 @@ module.exports = {
         })
     }
 }
+
+module.exports = mmUtils

@@ -39,24 +39,24 @@ module.exports = {
 	calcProfit(buildings) {
 		let resultados = []
 		for (let k = 0; k < buildings.length; k++) {
-			const recompensa = mmUtils.dineroRobadoEdificios(k + 1, buildings[k])
-			if (recompensa + '' != 'NaN') {
+			const robado = mmUtils.dineroRobadoEdificios(k + 1, buildings[k])
+			if (robado + '' != 'NaN') {
 				resultados.push({
 					id: k,
 					nombre: mmUtils.getEdificioName(k + 1),
-					recompensa,
+					robado,
 					recuperacion: mmUtils.precioRecuperacion(k + 1, buildings[k])
 				})
 			}
 		}
 
-		const best = resultados.reduce((a, b) => a.recompensa > b.recompensa ? a : b)
+		const best = resultados.reduce((a, b) => a.robado > b.robado ? a : b)
 		let responseData = ''
 		resultados.forEach(val => {
 			responseData += '<br/>'
 			if (best.id === val.id) responseData += '<b><u>' + val.nombre + '</u></b>'
 			else responseData += '<u>' + val.nombre + '</u>'
-			responseData += ': ganas <b>' + mmUtils.puntuar(val.recompensa) + '</b> &euro; y el coste de recuperación es de <u>' + mmUtils.puntuar(val.recuperacion) + '</u> &euro;.'
+			responseData += ': ganas <b>' + mmUtils.puntuar(val.robado) + '</b> &euro; y el coste de recuperación es de <u>' + mmUtils.puntuar(val.recuperacion) + '</u> &euro;.'
 		})
 
 		return responseData
