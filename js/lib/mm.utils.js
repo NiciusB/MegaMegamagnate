@@ -35,7 +35,7 @@ const mmUtils = {
     infoOptimizarNegocio(arrayCantidadEdificios, precioOptimizar) {
         precioOptimizar = parseInt(precioOptimizar)
         var suma = 0
-        for (var k = 0; k < edificios.length; k++) {
+        for (var k = 1; k < arrayCantidadEdificios.length; k++) {
             suma += e_aumentoPorOptimizar[k] * arrayCantidadEdificios[k]
         }
         return {

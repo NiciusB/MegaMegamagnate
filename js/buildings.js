@@ -2,7 +2,7 @@ import mmUtils from './lib/mm.utils.js'
 
 module.exports = {
 	calcNewInfo() {
-		var arrayCantidadEdificios = []
+		var arrayCantidadEdificios = [false]
 		$('.tablaContenido2 tr').each(function () {
 			if ($(this).attr('id') && $(this).attr('id').indexOf('cachoEdificio') !== -1) {
 				if (!$(this).find('.mainContent').length) { // First time
