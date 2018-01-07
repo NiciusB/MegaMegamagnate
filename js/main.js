@@ -44,8 +44,6 @@ window.formatNumber = function (numero) {
   return num.toFormatted()
 }
 
-$('.footer').hide()
-
 if(!settings.general_playButton) $('.trozoLogin a[href="https://play.google.com/store/apps/details?id=net.megamagnate"]').hide()
 
 if (settings.general_moneyTimer) {
