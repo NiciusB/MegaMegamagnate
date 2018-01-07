@@ -75,6 +75,20 @@ if (settings.general_moneyTimer) {
   }
 }
 
-switchLocation(window.location.pathname.split('/').splice(1))
+try {
+  switchLocation(window.location.pathname.split('/').splice(1))
+} catch (e) {
+  console.error(e)
+}
+
+$('.menuOpciones:last').append(`
+<a data="discordMenu" target="_blank" href="https://discord.gg/juYwrx5"><p id="discordMenu">
+  - Discord <img src="https://discordapp.com/assets/1c8a54f25d101bdc607cec7228247a9a.svg" style="
+  width: 1em;
+  height: 1em;
+  margin: 0 0.2em;
+  vertical-align: middle;"/> (no oficial)
+</p></a>
+`)
 
 window.mmm_settings = undefined
