@@ -11,8 +11,7 @@ var casinos = {
 	init() {
 		if (Cookies.get('monsterMode')) this.monsterModeInit()
 
-		var fichas = document.getElementById('fichas')
-		fichas.value = fichas.length * 5
+		fichas.value = fichas.lastElementChild.value
 		var botones = $('<div style="text-align:center;margin:1em;"></div>').insertBefore('#mensajescasino')
 		$('<button></button>').appendTo(botones).click(function () {
 			casinos.auto = !casinos.auto
